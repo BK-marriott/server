@@ -4,10 +4,10 @@ import com.bkmarriott.auth.domain.Password;
 
 public class UserForSignup {
 
-    String email;
-    Password password;
-    String name;
-    Role role;
+    private final String email;
+    private final Password password;
+    private final String name;
+    private final Role role;
 
     private UserForSignup(String email, Password password, String name, Role role) {
         this.email = email;
