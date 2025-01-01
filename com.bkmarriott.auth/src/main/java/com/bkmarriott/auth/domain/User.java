@@ -43,4 +43,12 @@ public class User {
     public Role getRole() {
         return role;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
