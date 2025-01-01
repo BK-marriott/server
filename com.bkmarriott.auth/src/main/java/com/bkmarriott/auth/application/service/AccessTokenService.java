@@ -3,6 +3,7 @@ package com.bkmarriott.auth.application.service;
 import com.bkmarriott.auth.application.util.dategnerator.DateGenerator;
 import com.bkmarriott.auth.domain.User;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +29,13 @@ public class AccessTokenService {
     ) {
         this.dateGenerator = dateGenerator;
         this.tokenExpiration = tokenExpiration;
-        this.secretKey = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
     }
 
     public String generateAccessToken(User user) {
         String token = Jwts.builder()
             .claim(CLAIM_NAME_USER_ID, user.getId())
-            .claim(CLAIM_NAME_ROLE, user.getRole())
+            .claim(CLAIM_NAME_ROLE, user.getRole().name())
             .expiration(dateGenerator.calcExpireDate(tokenExpiration))
             .signWith(secretKey)
             .compact();
