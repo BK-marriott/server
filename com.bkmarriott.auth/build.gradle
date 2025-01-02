@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'com.bkmarriott'
@@ -33,6 +34,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -43,6 +45,60 @@ dependencyManagement {
 	}
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
+	finalizedBy 'jacocoTestReport'
+}
+
+jacoco {
+	toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+
+	reports {
+		xml.required = false;
+		csv.required = false;
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+
+	afterEvaluate {
+
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, excludes: [
+					"**/config/*",
+					"**/entity/*",
+					"**/util/*",
+					"**/auth/presentation/rest/dto/*",
+					"**/auth/presentation/rest/util/*",
+					"**/AuthApplication.class"])
+		}))
+	}
+
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true
+			element = 'CLASS'
+
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+
+			excludes = ["*.*Config", "*.*Entity*", "*.*Application", "*.dto.*",
+						"*.util.*", "*.exception.*", "*.*Query*"
+			]
+		}
+	}
 }
