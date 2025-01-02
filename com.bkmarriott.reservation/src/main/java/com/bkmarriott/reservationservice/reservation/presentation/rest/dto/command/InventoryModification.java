@@ -5,7 +5,9 @@ import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +40,29 @@ public class InventoryModification {
           .collect(Collectors.toList());
     }
 
+  }
+
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor(access = AccessLevel.PRIVATE)
+  @Builder
+  public static class Response {
+
+    private Long hotelId;
+    private LocalDate date;
+    private RoomEntityType roomType;
+    private int totalInventory;
+    private int totalReserved;
+
+    public static Response fromDomain(Long hotelId, LocalDate date, RoomEntityType roomType, int totalInventory,int totalReserved) {
+      return Response.builder()
+          .hotelId(hotelId)
+          .date(date)
+          .roomType(roomType)
+          .totalInventory(totalInventory)
+          .totalReserved(totalReserved)
+          .build();
+    }
   }
 
 

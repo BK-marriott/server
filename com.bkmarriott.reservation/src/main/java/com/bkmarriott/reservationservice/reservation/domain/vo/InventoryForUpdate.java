@@ -16,6 +16,7 @@ public class InventoryForUpdate {
   private Long hotelId;
   private LocalDate date;
   private RoomEntityType roomType;
+  private int totalInventory;
   private int totalReserved;
 
 }

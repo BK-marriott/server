@@ -4,8 +4,10 @@ import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class Inventory {
 
   private InventoryId id;

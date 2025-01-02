@@ -6,13 +6,14 @@ import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryEntity;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryId;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryRepository;
-import java.time.LocalDate;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class InventoryCommandAdaptor {
 
   private final InventoryRepository inventoryRepository;
@@ -23,4 +24,11 @@ public class InventoryCommandAdaptor {
         .or(Optional::empty);
   }
 
+  public void increaseReservated(Inventory inventory) {
+    inventoryRepository.findById(RoomTypeInventoryId.fromDomain(inventory.getId()))
+        .ifPresent(entity -> new RoomTypeInventoryEntity().increaseReserved(
+            inventory.getId().getHotelId(), inventory.getId().getDate(), inventory.getId()
+                .getRoomType(), inventory.getTotalInventory(), inventory.getTotalReserved()
+        ));
+  }
 }

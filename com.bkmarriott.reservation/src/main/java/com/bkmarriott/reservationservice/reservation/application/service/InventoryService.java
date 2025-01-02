@@ -4,6 +4,7 @@ import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory.InventoryId;
 import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryForUpdate;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.InventoryCommandAdaptor;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryEntity;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class InventoryService {
 
   private final InventoryCommandAdaptor inventoryCommandAdaptor;
@@ -26,7 +26,6 @@ public class InventoryService {
     log.debug("[InventoryService] [updatetotalReserved] hotelId ::: {}, roomtype ::: {}", inventoryForUpdates.get(0).getHotelId(), inventoryForUpdates.get(0).getRoomType());
 
     List<Inventory> inventoryList = new ArrayList<>();
-
     for(InventoryForUpdate inventoryForUpdate : inventoryForUpdates) {
       Inventory inventory = inventoryCommandAdaptor.findById(
           new InventoryId(
@@ -35,8 +34,10 @@ public class InventoryService {
               inventoryForUpdate.getRoomType()))
           .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+
       inventoryList.add(inventory);
-      // update
+      inventoryCommandAdaptor.increaseReservated(inventory);
+
     }
 
     return inventoryList;
