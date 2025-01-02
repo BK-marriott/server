@@ -2,9 +2,9 @@ package com.bkmarriott.charge.infrastructure.persistence.adapter;
 
 import com.bkmarriott.charge.domain.RoomCharge;
 import com.bkmarriott.charge.domain.vo.RoomChargeForCreate;
+import com.bkmarriott.charge.domain.vo.RoomChargeForFind;
 import com.bkmarriott.charge.domain.vo.RoomType;
 import com.bkmarriott.charge.infrastructure.persistence.config.RepositoryTest;
-import com.bkmarriott.charge.infrastructure.persistence.entity.RoomChargeId;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,10 @@ import java.util.Optional;
 
 @DisplayName("[Infrastructure] RoomCharge Repository Unit Test")
 @RepositoryTest
-class RoomChargeCommandAdapterTest {
+class RoomChargeAdapterTest {
 
     @Autowired
-    private RoomChargeCommandAdapter roomChargeCommandAdapter;
+    private RoomChargeAdapter roomChargeAdapter;
 
     @Test
     @DisplayName("[객실 요금 등록 성공 테스트] 객실 요금을 등록한 뒤 도메인 객체를 반환한다.")
@@ -26,7 +26,7 @@ class RoomChargeCommandAdapterTest {
         // Given
         RoomChargeForCreate roomChargeForCreate = genRoomChargeForCreate();
         // When
-        RoomCharge actual = roomChargeCommandAdapter.create(roomChargeForCreate);
+        RoomCharge actual = roomChargeAdapter.create(roomChargeForCreate);
         // Then
         Assertions.assertAll(
                 () -> Assertions.assertEquals(roomChargeForCreate.hotelId(), actual.getHotelId()),
@@ -50,9 +50,9 @@ class RoomChargeCommandAdapterTest {
     void findById_successTest() {
         // Given
         RoomChargeForCreate roomChargeForCreate = genRoomChargeForCreate();
-        RoomCharge roomCharge = roomChargeCommandAdapter.create(roomChargeForCreate);
+        RoomCharge roomCharge = roomChargeAdapter.create(roomChargeForCreate);
         // When
-        Optional<RoomCharge> optionalRoomCharge = roomChargeCommandAdapter.findById(RoomChargeId.from(roomCharge.getHotelId(), roomCharge.getRoomType()));
+        Optional<RoomCharge> optionalRoomCharge = roomChargeAdapter.findById(RoomChargeForFind.of(roomCharge.getHotelId(), roomCharge.getRoomType()));
         // Then
         Assertions.assertAll(
                 () -> Assertions.assertTrue(optionalRoomCharge.isPresent()),
