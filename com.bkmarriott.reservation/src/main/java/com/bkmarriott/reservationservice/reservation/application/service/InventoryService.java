@@ -3,7 +3,10 @@ package com.bkmarriott.reservationservice.reservation.application.service;
 import com.bkmarriott.reservationservice.reservation.application.exception.InventoryUpdateFailureException;
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryCommandOutputPort;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
-import java.time.LocalDate;
+import com.bkmarriott.reservationservice.reservation.domain.Reservation;
+import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationStatus;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.ReservationQueryAdaptor;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,19 +17,37 @@ import org.springframework.stereotype.Service;
 public class InventoryService {
 
   private final InventoryCommandOutputPort inventoryCommandOutputPort;
+  private final ReservationQueryAdaptor reservationQueryAdaptor;
 
-  public Inventory updateTotalReserved(Inventory inventoryForUpdate) {
+  public List<Inventory> updateTotalReserved(Long hotelId) {
 
-    log.debug("[InventoryService] [updatetotalReserved] hotelId ::: {}, roomtype ::: {}", inventoryForUpdate.getHotelId(), inventoryForUpdate.getRoomType());
+    Reservation reservation = reservationQueryAdaptor.findById(hotelId).toDomain();
 
-    if(inventoryForUpdate.getDate().isBefore(LocalDate.now())) {
-      throw new IllegalArgumentException("예약 할 수 없는 날짜");
-    }
     try {
-      return inventoryCommandOutputPort.increaseReserved(inventoryForUpdate);
+
+      if (reservation.getStatus().equals(ReservationStatus.PAID)) {
+          log.debug("[InventoryService] [Increase totalReserved] hotelId ::: {}, roomtype ::: {}"
+              , reservation.getHotelId(), reservation.getRoomType());
+
+        return reservation.toDamain().stream()
+            .map(inventoryCommandOutputPort::increaseReserved)
+            .toList();
+        }
+
+      if (reservation.getStatus().equals(ReservationStatus.CANCELLED) || reservation.getStatus().equals(ReservationStatus.REFUNDED)) {
+        log.debug("[InventoryService] [Decrease totalReserved] hotelId ::: {}, roomtype ::: {}"
+            , reservation.getHotelId(), reservation.getRoomType());
+
+        return reservation.toDamain().stream()
+            .map(inventoryCommandOutputPort::decreaseReserved)
+            .toList();
+        }
+
+      throw new IllegalArgumentException("잘못된 예약 상태 정보");
+
     } catch (Exception e) {
-      log.error("[InventoryService] [increaseReserved] hotelId ::: {}, roomType ::: {}, date ::: {}",
-          inventoryForUpdate.getHotelId(), inventoryForUpdate.getRoomType(), inventoryForUpdate.getDate());
+      log.error("[InventoryService] [updateTotalReserved] hotelId ::: {}, roomType ::: {}",
+          reservation.getHotelId(), reservation.getRoomType(), e);
       throw new InventoryUpdateFailureException("객실 예약 인벤토리 정보 수정 실패");
     }
 

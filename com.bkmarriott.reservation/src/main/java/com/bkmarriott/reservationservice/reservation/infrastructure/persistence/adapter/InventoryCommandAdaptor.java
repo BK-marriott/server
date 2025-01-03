@@ -27,9 +27,13 @@ public class InventoryCommandAdaptor implements InventoryCommandOutputPort {
 
   @Override
   public Inventory increaseReserved(Inventory inventory) {
-
     RoomTypeInventoryEntity roomTypeInventoryEntity = findById(inventory.getHotelId(), inventory.getDate(), inventory.getRoomType());
-
     return roomTypeInventoryEntity.increaseReserved().toDomain();
+  }
+
+  @Override
+  public Inventory decreaseReserved(Inventory inventory) {
+    RoomTypeInventoryEntity roomTypeInventoryEntity = findById(inventory.getHotelId(), inventory.getDate(), inventory.getRoomType());
+    return roomTypeInventoryEntity.decreaseReserved().toDomain();
   }
 }

@@ -14,7 +14,7 @@ public enum RoomEntityType {
         return roomType;
       }
     }
-      throw new IllegalArgumentException("Invalid role: " + this.name());
+      throw new IllegalArgumentException("Invalid type: " + this.name());
   }
 
   public static RoomEntityType fromDomain(RoomType roomType) {

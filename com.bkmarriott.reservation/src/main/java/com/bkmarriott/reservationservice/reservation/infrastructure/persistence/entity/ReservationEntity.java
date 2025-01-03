@@ -1,5 +1,6 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity;
 
+import com.bkmarriott.reservationservice.reservation.domain.Reservation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,6 +45,18 @@ public class ReservationEntity extends BaseEntity {
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private ReservationEntityStatus status;
+
+  public Reservation toDomain() {
+    return Reservation.builder()
+        .reservationId(id)
+        .userId(userId)
+        .hotelId(hotelId)
+        .startDate(startDate)
+        .endDate(endDate)
+        .roomType(roomType.toDomain())
+        .status(status.toDomain())
+        .build();
+  }
 
 
 }
