@@ -28,7 +28,7 @@ public class ReservationEntity extends BaseEntity {
   @Column(name = "hotel_id", nullable = false)
   private Long hotelId;
 
-  @Column(name = "room_id", nullable = true)
+  @Column(name = "room_id")
   private Long roomId;
 
   @Column(name = "start_date", nullable = false)
