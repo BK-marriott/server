@@ -1,39 +1,24 @@
 package com.bkmarriott.reservationservice.reservation.domain;
 
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomEntityType;
+import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class Inventory {
 
-  private InventoryId id;
+  private Long hotelId;
+  private LocalDate date;
+  private RoomType roomType;
+
   private int totalInventory;
   private int totalReserved;
-
-  @Builder
-  public Inventory(InventoryId id, int totalInventory, int totalReserved) {
-    this.id = id;
-    this.totalInventory = totalInventory;
-    this.totalReserved = totalReserved;
-  }
-
-  @Getter
-  public static class InventoryId {
-
-    private Long hotelId;
-    private LocalDate date;
-    private RoomEntityType roomType;
-
-    @Builder
-    public InventoryId(Long hotelId, LocalDate date, RoomEntityType roomType) {
-      this.hotelId = hotelId;
-      this.date = date;
-      this.roomType = roomType;
-    }
-  }
 
 }

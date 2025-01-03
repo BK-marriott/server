@@ -1,6 +1,6 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity;
 
-public enum ReservationStatus {
+public enum ReservationEntityStatus {
 
   PENDING, PAID, REFUNDED, CANCELLED, REJECTED;
 }

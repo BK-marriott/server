@@ -1,11 +1,11 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity;
 
+import com.bkmarriott.reservationservice.reservation.application.exception.RoomTypeInventoryEntityException;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,25 +32,31 @@ public class RoomTypeInventoryEntity extends BaseEntity {
 
   public Inventory toDomain() {
     return Inventory.builder()
-        .id(id.toDomain())
+        .hotelId(id.getHotelId())
+        .date(id.getDate())
+        .roomType(id.getRoomType().toDomain())
         .totalInventory(totalInventory)
         .totalReserved(totalReserved)
         .build();
   }
 
-  public RoomTypeInventoryEntity increaseReserved(Long hotelId, LocalDate date, RoomEntityType roomType, int totalInventory, int totalReserved) {
-    return RoomTypeInventoryEntity.builder()
-        .id(new RoomTypeInventoryId(hotelId, date, roomType))
-        .totalInventory(totalInventory)
-        .totalReserved(totalReserved + 1)
-        .build();
+  public RoomTypeInventoryEntity increaseReserved() {
+
+    if(totalInventory == totalReserved) {
+      throw new RoomTypeInventoryEntityException("예약 가능한 객실이 없습니다.");
+    }
+
+    this.totalReserved++;
+    return this;
   }
 
-  public RoomTypeInventoryEntity decreaseReserved(Long hotelId, LocalDate date, RoomEntityType roomType, int totalInventory, int totalReserved) {
-    return RoomTypeInventoryEntity.builder()
-        .id(new RoomTypeInventoryId(hotelId, date, roomType))
-        .totalInventory(totalInventory)
-        .totalReserved(totalReserved - 1)
-        .build();
+  public RoomTypeInventoryEntity decreaseReserved() {
+
+    if(totalReserved == 0) {
+      throw new RoomTypeInventoryEntityException("예약된 객실이 없습니다.");
+    }
+
+    this.totalReserved--;
+    return this;
   }
 }

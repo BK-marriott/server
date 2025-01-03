@@ -1,7 +1,7 @@
 package com.bkmarriott.reservationservice.reservation.presentation.rest.dto.command;
 
-import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryForUpdate;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomEntityType;
+import com.bkmarriott.reservationservice.reservation.domain.Inventory;
+import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,12 +21,12 @@ public class InventoryModification {
     private Long hotelId;
     private LocalDate startDate;
     private LocalDate endDate;
-    private RoomEntityType roomType;
+    private RoomType roomType;
 
-    public List<InventoryForUpdate> toDomain() {
+    public List<Inventory> toDomain() {
 
       return getDateRange(this.startDate, this.endDate).stream()
-          .map(date -> InventoryForUpdate.builder()
+          .map(date -> Inventory.builder()
               .hotelId(hotelId)
               .date(date)
               .roomType(roomType)
@@ -50,11 +50,11 @@ public class InventoryModification {
 
     private Long hotelId;
     private LocalDate date;
-    private RoomEntityType roomType;
+    private RoomType roomType;
     private int totalInventory;
     private int totalReserved;
 
-    public static Response fromDomain(Long hotelId, LocalDate date, RoomEntityType roomType, int totalInventory,int totalReserved) {
+    public static Response from(Long hotelId, LocalDate date, RoomType roomType, int totalInventory,int totalReserved) {
       return Response.builder()
           .hotelId(hotelId)
           .date(date)
