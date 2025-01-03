@@ -1,5 +1,6 @@
 package com.bkmarriott.hotel.presentation.rest.controller;
 
+import com.bkmarriott.hotel.application.dto.HotelSearchResponseDto;
 import com.bkmarriott.hotel.application.service.HotelService;
 import com.bkmarriott.hotel.domain.Hotel;
 import com.bkmarriott.hotel.presentation.rest.dto.request.HotelSearchRequest;
@@ -43,8 +44,8 @@ public class HotelControllerTest {
         String requestUrl = "/api/v1/hotels";
 
 
-        Page<Hotel> mockResponse = new PageImpl<>(List.of(
-                new Hotel(1L,"Marriott Hotel Seoul","South Korea", "Seoul", "address", "description")
+        Page<HotelSearchResponseDto> mockResponse = new PageImpl<>(List.of(
+                new HotelSearchResponseDto(new Hotel(1L,"Marriott Hotel Seoul","South Korea", "Seoul", "address", "description"), 10000)
         ));
         Mockito.when(hotelService.searchHotel(ArgumentMatchers.any(HotelSearchRequest.class), ArgumentMatchers.any(Pageable.class)))
                         .thenReturn(mockResponse);
@@ -59,6 +60,7 @@ public class HotelControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value("Marriott Hotel Seoul"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].city").value("Seoul"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].charge").value(10000))
                 .andDo(print());
     }
 
@@ -74,8 +76,8 @@ public class HotelControllerTest {
         String requestUrl = "/api/v1/hotels";
 
 
-        Page<Hotel> mockResponse = new PageImpl<>(List.of(
-                new Hotel(1L,"Marriott Hotel Seoul","South Korea", "Seoul", "address", "description")
+        Page<HotelSearchResponseDto> mockResponse = new PageImpl<>(List.of(
+                new HotelSearchResponseDto(new Hotel(1L,"Marriott Hotel Seoul","South Korea", "Seoul", "address", "description"), 10000)
         ));
         Mockito.when(hotelService.searchHotel(ArgumentMatchers.any(HotelSearchRequest.class), ArgumentMatchers.any(Pageable.class)))
                 .thenReturn(mockResponse);
