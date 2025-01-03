@@ -12,6 +12,7 @@ public class RoomCharge {
 
     private Long hotelId;
     private RoomType roomType;
+    private LocalDate date;
     private Integer charge;
     private LocalDate date;
 

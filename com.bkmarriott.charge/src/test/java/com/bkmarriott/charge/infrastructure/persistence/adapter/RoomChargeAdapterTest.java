@@ -31,18 +31,18 @@ class RoomChargeAdapterTest {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(roomChargeForCreate.hotelId(), actual.getHotelId()),
                 () -> Assertions.assertEquals(roomChargeForCreate.roomType(), actual.getRoomType()),
-                () -> Assertions.assertEquals(roomChargeForCreate.charge(), actual.getCharge()),
-                () -> Assertions.assertEquals(roomChargeForCreate.date(), actual.getDate())
+                () -> Assertions.assertEquals(roomChargeForCreate.date(), actual.getDate()),
+                () -> Assertions.assertEquals(roomChargeForCreate.charge(), actual.getCharge())
         );
     }
 
     private RoomChargeForCreate genRoomChargeForCreate() {
         Long hotelId = 1L;
         RoomType roomType = RoomType.STANDARD;
-        Integer charge = 10000;
         LocalDate date = LocalDate.now();
+        Integer charge = 10000;
 
-        return RoomChargeForCreate.of(hotelId, roomType, charge, date);
+        return RoomChargeForCreate.of(hotelId, roomType, date, charge);
     }
 
     @Test
@@ -52,7 +52,9 @@ class RoomChargeAdapterTest {
         RoomChargeForCreate roomChargeForCreate = genRoomChargeForCreate();
         RoomCharge roomCharge = roomChargeAdapter.create(roomChargeForCreate);
         // When
-        Optional<RoomCharge> optionalRoomCharge = roomChargeAdapter.findById(RoomChargeForFind.of(roomCharge.getHotelId(), roomCharge.getRoomType()));
+        Optional<RoomCharge> optionalRoomCharge = roomChargeAdapter.findById(
+                RoomChargeForFind.of(roomCharge.getHotelId(), roomCharge.getRoomType(), roomChargeForCreate.date())
+        );
         // Then
         Assertions.assertAll(
                 () -> Assertions.assertTrue(optionalRoomCharge.isPresent()),

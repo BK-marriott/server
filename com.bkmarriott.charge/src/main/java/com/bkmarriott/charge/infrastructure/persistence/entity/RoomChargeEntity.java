@@ -22,25 +22,21 @@ public class RoomChargeEntity extends BaseEntity {
     @Column(nullable = false)
     private Integer charge;
 
-    @Column(nullable = false)
-    private LocalDate date;
-
-    public RoomChargeEntity(Long hotelId, RoomEntityType roomType, Integer charge, LocalDate date) {
-        this.id = new RoomChargeId(hotelId, roomType);
+    public RoomChargeEntity(Long hotelId, RoomEntityType roomType, LocalDate date, Integer charge) {
+        this.id = new RoomChargeId(hotelId, roomType, date);
         this.charge = charge;
-        this.date = date;
     }
 
     public RoomCharge toDomain() {
-        return new RoomCharge(id.getHotelId(), id.getRoomType().toDomain(), charge, date);
+        return new RoomCharge(id.getHotelId(), id.getRoomType().toDomain(), id.getDate(), charge);
     }
 
     public static RoomChargeEntity from(RoomChargeForCreate roomCharge) {
         return new RoomChargeEntity(
                 roomCharge.hotelId(),
                 RoomEntityType.fromDomain(roomCharge.roomType()),
-                roomCharge.charge(),
-                roomCharge.date()
+                roomCharge.date(),
+                roomCharge.charge()
         );
     }
 }

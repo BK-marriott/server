@@ -36,7 +36,7 @@ class RoomChargeServiceTest {
     @DisplayName("[객실 요금 생성 성공 테스트] 객실 요금 생성 후 객실 요금 정보를 반환한다.")
     void create_successTest() {
         // Given
-        RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, 10000, LocalDate.now());
+        RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
         // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
@@ -54,7 +54,7 @@ class RoomChargeServiceTest {
     @DisplayName("[객실 요금 생성 실패 테스트] 객실 요금이 중복되는 경우 예외를 발생시킨다.")
     void create_failTest_duplicate() {
         // Given
-        RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, 10000, LocalDate.now());
+        RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
         // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
@@ -71,8 +71,8 @@ class RoomChargeServiceTest {
     @DisplayName("[객실 요금 조회 성공 테스트] 해당 객실 타입의 객실 요금을 반환한다.")
     void find_successTest() {
         // Given
-        RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD);
-        RoomCharge mockRoomCharge = new RoomCharge(1L, RoomType.STANDARD, 10000, LocalDate.now());
+        RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD, LocalDate.now());
+        RoomCharge mockRoomCharge = new RoomCharge(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
         // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
@@ -87,7 +87,7 @@ class RoomChargeServiceTest {
     @DisplayName("[객실 요금 조회 실패 테스트] 존재하지 않는 객실 타입인 경우 예외를 발생시킨다.")
     void find_failTest_invalidType() {
         // Given
-        RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD);
+        RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD, LocalDate.now());
 
         // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))

@@ -1,8 +1,10 @@
 package com.bkmarriott.charge.domain.vo;
 
-public record RoomChargeForFind(Long hotelId, RoomType roomType) {
+import java.time.LocalDate;
 
-    public static RoomChargeForFind of(Long hotelId, RoomType roomType) {
-        return new RoomChargeForFind(hotelId, roomType);
+public record RoomChargeForFind(Long hotelId, RoomType roomType, LocalDate date) {
+
+    public static RoomChargeForFind of(Long hotelId, RoomType roomType, LocalDate date) {
+        return new RoomChargeForFind(hotelId, roomType, date);
     }
 }

@@ -12,21 +12,21 @@ class RoomChargeTest {
 
     private final Long hotelId = 1L;
     private final RoomType roomType = RoomType.STANDARD;
-    private final Integer charge = 10000;
     private final LocalDate date = LocalDate.now();
+    private final Integer charge = 10000;
 
     @Test
     @DisplayName("[RoomCharge 생성 성공 테스트] RoomCharge 도메인 객체를 생성한다.")
     void createRoomCharge_successTest() {
         // Given & When
-        RoomCharge roomCharge = new RoomCharge(hotelId, roomType, charge, date);
+        RoomCharge roomCharge = new RoomCharge(hotelId, roomType, date, charge);
 
         // Then
         Assertions.assertAll(
                 () -> Assertions.assertEquals(hotelId, roomCharge.getHotelId()),
                 () -> Assertions.assertEquals(roomType, roomCharge.getRoomType()),
-                () -> Assertions.assertEquals(charge, roomCharge.getCharge()),
-                () -> Assertions.assertEquals(date, roomCharge.getDate())
+                () -> Assertions.assertEquals(date, roomCharge.getDate()),
+                () -> Assertions.assertEquals(charge, roomCharge.getCharge())
         );
     }
 }

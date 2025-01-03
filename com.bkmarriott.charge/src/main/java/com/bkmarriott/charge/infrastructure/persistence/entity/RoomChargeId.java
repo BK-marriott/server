@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Embeddable
 @NoArgsConstructor
@@ -25,7 +26,10 @@ public class RoomChargeId implements Serializable {
     @Enumerated(EnumType.STRING)
     private RoomEntityType roomType;
 
+    @Column(nullable = false)
+    private LocalDate date;
+
     public static RoomChargeId fromDomain(RoomChargeForFind roomChargeForFind) {
-        return new RoomChargeId(roomChargeForFind.hotelId(), RoomEntityType.fromDomain(roomChargeForFind.roomType()));
+        return new RoomChargeId(roomChargeForFind.hotelId(), RoomEntityType.fromDomain(roomChargeForFind.roomType()), roomChargeForFind.date());
     }
 }

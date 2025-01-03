@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface RoomChargeRepository extends JpaRepository<RoomChargeEntity, RoomChargeId> {
-    Optional<RoomChargeEntity> findByIdAndIsDeletedFalse(RoomChargeId id);
+    Optional<RoomChargeEntity> findByIdAndIsDeletedFalse(RoomChargeId roomChargeId);
 }
