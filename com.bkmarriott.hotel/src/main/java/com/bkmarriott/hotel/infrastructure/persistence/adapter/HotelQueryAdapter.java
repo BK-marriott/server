@@ -1,5 +1,6 @@
 package com.bkmarriott.hotel.infrastructure.persistence.adapter;
 
+import com.bkmarriott.hotel.application.outputport.HotelQueryOutputPort;
 import com.bkmarriott.hotel.domain.Hotel;
 import com.bkmarriott.hotel.infrastructure.persistence.repository.HotelQueryRepository;
 import com.bkmarriott.hotel.presentation.rest.dto.request.HotelSearchRequest;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class HotelQueryAdapter {
+public class HotelQueryAdapter implements HotelQueryOutputPort {
 
     private final HotelQueryRepository hotelQueryRepository;
 
