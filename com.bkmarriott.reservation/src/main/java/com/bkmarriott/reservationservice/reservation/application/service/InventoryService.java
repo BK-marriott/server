@@ -1,45 +1,34 @@
 package com.bkmarriott.reservationservice.reservation.application.service;
 
+import com.bkmarriott.reservationservice.reservation.application.exception.InventoryUpdateFailureException;
+import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryCommandOutputPort;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
-import com.bkmarriott.reservationservice.reservation.domain.Inventory.InventoryId;
-import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryForUpdate;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.InventoryCommandAdaptor;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryEntity;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class InventoryService {
 
-  private final InventoryCommandAdaptor inventoryCommandAdaptor;
+  private final InventoryCommandOutputPort inventoryCommandOutputPort;
 
-  public List<Inventory> updatetotalReserved(List<InventoryForUpdate> inventoryForUpdates) {
+  public Inventory updateTotalReserved(Inventory inventoryForUpdate) {
 
-    log.debug("[InventoryService] [updatetotalReserved] hotelId ::: {}, roomtype ::: {}", inventoryForUpdates.get(0).getHotelId(), inventoryForUpdates.get(0).getRoomType());
+    log.debug("[InventoryService] [updatetotalReserved] hotelId ::: {}, roomtype ::: {}", inventoryForUpdate.getHotelId(), inventoryForUpdate.getRoomType());
 
-    List<Inventory> inventoryList = new ArrayList<>();
-    for(InventoryForUpdate inventoryForUpdate : inventoryForUpdates) {
-      Inventory inventory = inventoryCommandAdaptor.findById(
-          new InventoryId(
-              inventoryForUpdate.getHotelId(),
-              inventoryForUpdate.getDate(),
-              inventoryForUpdate.getRoomType()))
-          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-
-      inventoryList.add(inventory);
-      inventoryCommandAdaptor.increaseReservated(inventory);
-
+    if(inventoryForUpdate.getDate().isBefore(LocalDate.now())) {
+      throw new IllegalArgumentException("예약 할 수 없는 날짜");
+    }
+    try {
+      return inventoryCommandOutputPort.increaseReserved(inventoryForUpdate);
+    } catch (Exception e) {
+      log.error("[InventoryService] [increaseReserved] hotelId ::: {}, roomType ::: {}, date ::: {}",
+          inventoryForUpdate.getHotelId(), inventoryForUpdate.getRoomType(), inventoryForUpdate.getDate());
+      throw new InventoryUpdateFailureException("객실 예약 인벤토리 정보 수정 실패");
     }
 
-    return inventoryList;
   }
 }

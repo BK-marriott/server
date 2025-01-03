@@ -11,9 +11,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @Configuration
 public class PersistenceConfig {
 
-  @Bean
-  public InventoryCommandAdaptor inventoryCommandAdaptor(@Autowired InventoryRepository inventoryRepository) {
-    return new InventoryCommandAdaptor(inventoryRepository);
-  }
-
 }

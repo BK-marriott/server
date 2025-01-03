@@ -1,7 +1,7 @@
 package com.bkmarriott.reservationservice.reservation.presentation.rest.controller;
 
 import com.bkmarriott.reservationservice.reservation.application.service.InventoryService;
-import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryForUpdate;
+import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.presentation.rest.dto.command.InventoryModification.Request;
 import com.bkmarriott.reservationservice.reservation.presentation.rest.dto.command.InventoryModification.Response;
 import com.bkmarriott.reservationservice.reservation.presentation.rest.util.reponse.ApiResponse;
@@ -28,14 +28,15 @@ public class InventoryCommandController {
   @PatchMapping
   public ResponseEntity<Success<List<Response>>> updateInventory(@RequestBody Request request) {
 
-    List<InventoryForUpdate> inventoryForUpdates = request.toDomain();
-    List<Response> responseList = inventoryService.updatetotalReserved(inventoryForUpdates).stream()
-        .map(inventory -> Response.fromDomain(
-            inventory.getId().getHotelId(),
-            inventory.getId().getDate(),
-            inventory.getId().getRoomType(),
-            inventory.getTotalInventory(),
-            inventory.getTotalReserved()))
+    List<Inventory> inventoryList = request.toDomain();
+    List<Response> responseList = inventoryList.stream()
+        .map(inventoryService::updateTotalReserved)
+        .map(inventory -> Response.from(
+            inventory.getHotelId()
+            ,inventory.getDate()
+            ,inventory.getRoomType()
+            ,inventory.getTotalInventory()
+            ,inventory.getTotalReserved()))
         .collect(Collectors.toList());
 
     return ApiResponse.success(responseList, HttpStatus.OK);
