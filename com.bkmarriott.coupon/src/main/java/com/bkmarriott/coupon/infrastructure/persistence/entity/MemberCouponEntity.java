@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "m_member_coupon")
-@Entity(name = "memberCoupon")
+@Entity(name = "MemberCoupon")
 public class MemberCouponEntity {
 
     @Id

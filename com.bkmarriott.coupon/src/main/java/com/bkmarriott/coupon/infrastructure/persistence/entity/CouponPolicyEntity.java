@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name = "m_coupon_policy")
-@Entity(name = "couponPolicy")
+@Entity(name = "CouponPolicy")
 public class CouponPolicyEntity extends BaseEntity {
 
     @Id
@@ -34,8 +34,5 @@ public class CouponPolicyEntity extends BaseEntity {
     private LocalDateTime startedAt;
 
     private LocalDateTime endedAt;
-
-    @OneToMany(mappedBy = "couponPolicy", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CouponEntity> coupons;
 
 }

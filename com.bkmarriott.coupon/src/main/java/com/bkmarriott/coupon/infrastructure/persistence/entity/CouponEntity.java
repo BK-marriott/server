@@ -36,7 +36,4 @@ public class CouponEntity extends BaseEntity {
     @Column(nullable = false)
     private Float discountRate;
 
-    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MemberCouponEntity> memberCoupons;
-
 }
