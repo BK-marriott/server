@@ -1,6 +1,5 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter;
 
-import com.bkmarriott.reservationservice.reservation.application.outputport.ReservationQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.ReservationEntity;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.ReservationRepository;
 import com.bkmarriott.reservationservice.reservation.presentation.rest.exception.ResourceNotFoundException;
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @RequiredArgsConstructor
 @Transactional
-public class ReservationQueryAdaptor implements ReservationQueryOutputPort {
+public class ReservationQueryAdaptor {
 
   private final ReservationRepository reservationRepository;
 
