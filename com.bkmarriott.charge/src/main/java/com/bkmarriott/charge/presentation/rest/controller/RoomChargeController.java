@@ -24,7 +24,7 @@ public class RoomChargeController {
     }
 
     @GetMapping
-    public ResponseEntity<RoomChargeResponse> findRoomCharge(@RequestBody FindRoomCharge.Request request) {
+    public ResponseEntity<RoomChargeResponse> findRoomCharge(@ModelAttribute FindRoomCharge.Request request) {
         RoomCharge roomCharge = roomChargeService.findOne(request.toDomain());
         return ResponseEntity.ok().body(RoomChargeResponse.from(roomCharge));
     }

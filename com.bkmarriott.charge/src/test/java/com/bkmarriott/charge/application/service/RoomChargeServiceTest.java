@@ -38,13 +38,13 @@ class RoomChargeServiceTest {
         // Given
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
-        // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
                 .thenReturn(Optional.empty());
 
         Mockito.when(roomChargeOutputPort.create(ArgumentMatchers.any(RoomChargeForCreate.class)))
                 .thenReturn(Mockito.mock(RoomCharge.class));
 
+        // When & Then
         Assertions.assertAll(
                 () -> Assertions.assertDoesNotThrow(() -> roomChargeService.create(roomChargeForCreate))
         );
@@ -56,10 +56,10 @@ class RoomChargeServiceTest {
         // Given
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
-        // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
                 .thenReturn(Optional.of(Mockito.mock(RoomCharge.class)));
 
+        // When & Then
         Assertions.assertAll(
                 () -> assertThatThrownBy(() -> roomChargeService.create(roomChargeForCreate))
                         .isInstanceOf(RoomChargeDuplicatedException.class)
@@ -74,10 +74,10 @@ class RoomChargeServiceTest {
         RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD, LocalDate.now());
         RoomCharge mockRoomCharge = new RoomCharge(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
-        // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
                 .thenReturn(Optional.of(mockRoomCharge));
 
+        // When & Then
         Assertions.assertAll(
                 () -> Assertions.assertDoesNotThrow(() -> roomChargeService.findOne(roomChargeForFind))
         );
@@ -89,10 +89,10 @@ class RoomChargeServiceTest {
         // Given
         RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD, LocalDate.now());
 
-        // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
                 .thenReturn(Optional.empty());
 
+        // When & Then
         Assertions.assertAll(
                 () -> assertThatThrownBy(() -> roomChargeService.findOne(roomChargeForFind))
                         .isInstanceOf(RoomChargeNotFoundException.class)
@@ -107,10 +107,10 @@ class RoomChargeServiceTest {
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 30000);
         RoomCharge mockRoomCharge = new RoomCharge(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
-        // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
                 .thenReturn(Optional.of(mockRoomCharge));
 
+        // When & Then
         Assertions.assertAll(
                 () -> Assertions.assertDoesNotThrow(() -> roomChargeService.update(roomChargeForCreate)),
                 () -> Assertions.assertEquals(roomChargeForCreate.charge(), mockRoomCharge.getCharge())
@@ -123,10 +123,10 @@ class RoomChargeServiceTest {
         // Given
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 1000);
 
-        // When & Then
         Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
                 .thenReturn(Optional.empty());
 
+        // When & Then
         Assertions.assertAll(
                 () -> assertThatThrownBy(() -> roomChargeService.update(roomChargeForCreate))
                         .isInstanceOf(RoomChargeNotFoundException.class)
