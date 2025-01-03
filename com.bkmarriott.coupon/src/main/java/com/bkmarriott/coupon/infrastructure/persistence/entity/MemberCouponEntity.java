@@ -1,5 +1,6 @@
 package com.bkmarriott.coupon.infrastructure.persistence.entity;
 
+import com.bkmarriott.coupon.domain.MemberCoupon;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,4 +38,8 @@ public class MemberCouponEntity {
 
     @Column(nullable = false)
     private LocalDateTime expiredAt;
+
+    public MemberCoupon toDomain() {
+        return new MemberCoupon(id, coupon.toDomain(), memberId, issuanceAt, spendingAt, expiredAt);
+    }
 }

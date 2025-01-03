@@ -1,5 +1,6 @@
 package com.bkmarriott.coupon.infrastructure.persistence.entity;
 
+import com.bkmarriott.coupon.domain.CouponPolicy;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,5 +35,9 @@ public class CouponPolicyEntity extends BaseEntity {
     private LocalDateTime startedAt;
 
     private LocalDateTime endedAt;
+
+    public CouponPolicy toDomain() {
+        return new CouponPolicy(id, type, afterDay, startedAt, endedAt);
+    }
 
 }

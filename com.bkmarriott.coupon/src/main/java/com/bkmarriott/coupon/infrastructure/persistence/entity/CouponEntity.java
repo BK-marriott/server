@@ -1,5 +1,6 @@
 package com.bkmarriott.coupon.infrastructure.persistence.entity;
 
+import com.bkmarriott.coupon.domain.Coupon;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,4 +37,7 @@ public class CouponEntity extends BaseEntity {
     @Column(nullable = false)
     private Float discountRate;
 
+    public Coupon toDomain() {
+        return new Coupon(id, couponPolicy.toDomain(), name, discountRate);
+    }
 }
