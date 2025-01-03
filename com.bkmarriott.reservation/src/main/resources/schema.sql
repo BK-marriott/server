@@ -27,8 +27,6 @@ CREATE TABLE M_ROOM_TYPE_INVENTORY
     HOTEL_ID        BIGINT                                       NOT NULL,
     ROOM_TYPE       ENUM ('DELUXE', 'STANDARD', 'SUITE', 'TWIN') NOT NULL,
     PRIMARY KEY (DATE, HOTEL_ID, ROOM_TYPE),
-    CONSTRAINT UK_HOTEL_ID
-        UNIQUE (HOTEL_ID),
     TOTAL_INVENTORY INT                                          NOT NULL,
     TOTAL_RESERVED  INT                                          NOT NULL,
     IS_DELETED      BIT                                          NOT NULL,

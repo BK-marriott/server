@@ -1,6 +1,6 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity;
 
-import com.bkmarriott.reservationservice.reservation.domain.Inventory.InventoryId;
+import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -9,14 +9,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Embeddable
 @NoArgsConstructor
 @EqualsAndHashCode
 public class RoomTypeInventoryId implements Serializable {
 
-  @Column(name = "hotel_id", unique = true, nullable = false)
+  @Column(name = "hotel_id", nullable = false)
   private Long hotelId;
 
   @Column(nullable = false)
@@ -34,19 +36,11 @@ public class RoomTypeInventoryId implements Serializable {
     this.roomType = roomType;
   }
 
-  public InventoryId toDomain() {
-    return InventoryId.builder()
-        .hotelId(this.hotelId)
-        .date(this.date)
-        .roomType(this.roomType)
-        .build();
-  }
-
-  public static RoomTypeInventoryId fromDomain(InventoryId inventoryId) {
+  public static RoomTypeInventoryId from(Long hotelId, LocalDate date, RoomType roomType) {
     return RoomTypeInventoryId.builder()
-        .hotelId(inventoryId.getHotelId())
-        .date(inventoryId.getDate())
-        .roomType(inventoryId.getRoomType())
+        .hotelId(hotelId)
+        .date(date)
+        .roomType(RoomEntityType.fromDomain(roomType))
         .build();
   }
 }
