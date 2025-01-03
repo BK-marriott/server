@@ -99,4 +99,39 @@ class RoomChargeServiceTest {
                         .hasMessage(RoomChargeErrorMessage.ROOM_CHARGE_NOT_EXIST.getMessage())
         );
     }
+
+    @Test
+    @DisplayName("[객실 요금 수정 성공 테스트] 객실 요금 수정 후 객실 요금 정보를 반환한다.")
+    void update_successTest() {
+        // Given
+        RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 30000);
+        RoomCharge mockRoomCharge = new RoomCharge(1L, RoomType.STANDARD, LocalDate.now(), 10000);
+
+        // When & Then
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+                .thenReturn(Optional.of(mockRoomCharge));
+
+        Assertions.assertAll(
+                () -> Assertions.assertDoesNotThrow(() -> roomChargeService.update(roomChargeForCreate)),
+                () -> Assertions.assertEquals(roomChargeForCreate.charge(), mockRoomCharge.getCharge())
+        );
+    }
+
+    @Test
+    @DisplayName("[객실 요금 수정 실패 테스트] 존재하지 않는 객실 타입인 경우 예외를 발생시킨다.")
+    void update_failTest_invalidType() {
+        // Given
+        RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 1000);
+
+        // When & Then
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+                .thenReturn(Optional.empty());
+
+        Assertions.assertAll(
+                () -> assertThatThrownBy(() -> roomChargeService.update(roomChargeForCreate))
+                        .isInstanceOf(RoomChargeNotFoundException.class)
+                        .hasMessage(RoomChargeErrorMessage.ROOM_CHARGE_NOT_EXIST.getMessage())
+        );
+    }
+
 }

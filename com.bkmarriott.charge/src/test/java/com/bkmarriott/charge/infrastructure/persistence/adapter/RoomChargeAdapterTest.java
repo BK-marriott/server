@@ -22,7 +22,7 @@ class RoomChargeAdapterTest {
 
     @Test
     @DisplayName("[객실 요금 등록 성공 테스트] 객실 요금을 등록한 뒤 도메인 객체를 반환한다.")
-    void createRoomCharge_successTest() {
+    void create_successTest() {
         // Given
         RoomChargeForCreate roomChargeForCreate = genRoomChargeForCreate();
         // When
@@ -60,6 +60,23 @@ class RoomChargeAdapterTest {
                 () -> Assertions.assertTrue(optionalRoomCharge.isPresent()),
                 () -> Assertions.assertEquals(roomCharge.getHotelId(), optionalRoomCharge.get().getHotelId()),
                 () -> Assertions.assertEquals(roomCharge.getRoomType(), optionalRoomCharge.get().getRoomType())
+        );
+    }
+
+    @Test
+    @DisplayName("[객실 요금 수정 성공 테스트] 객실 요금을 수정한 뒤 도메인 객체를 반환한다.")
+    void updateCharge_successTest() {
+        // Given
+        RoomCharge roomCharge = new RoomCharge(1L, RoomType.STANDARD, LocalDate.now(), 10000);
+        Integer updateCharge =  50000;
+        // When
+        RoomCharge actual = roomChargeAdapter.updateCharge(roomCharge, updateCharge);
+        // Then
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(roomCharge.getHotelId(), actual.getHotelId()),
+                () -> Assertions.assertEquals(roomCharge.getRoomType(), actual.getRoomType()),
+                () -> Assertions.assertEquals(roomCharge.getDate(), actual.getDate()),
+                () -> Assertions.assertEquals(roomCharge.getCharge(), actual.getCharge())
         );
     }
 }

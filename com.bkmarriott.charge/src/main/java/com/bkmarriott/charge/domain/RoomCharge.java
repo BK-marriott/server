@@ -14,6 +14,8 @@ public class RoomCharge {
     private RoomType roomType;
     private LocalDate date;
     private Integer charge;
-    private LocalDate date;
 
+    public void updateCharge(Integer charge) {
+        this.charge = charge;
+    }
 }

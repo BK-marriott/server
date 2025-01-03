@@ -47,8 +47,6 @@ public class RoomChargeService {
                 RoomChargeForFind.of(roomChargeForCreate.hotelId(), roomChargeForCreate.roomType(), roomChargeForCreate.date())
         ).orElseThrow(RoomChargeNotFoundException::new);
 
-        roomCharge.updateCharge(roomChargeForCreate.charge());
-
-        return roomCharge;
+        return roomChargeOutputPort.updateCharge(roomCharge, roomChargeForCreate.charge());
     }
 }

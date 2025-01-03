@@ -27,4 +27,10 @@ public class RoomChargeAdapter implements RoomChargeOutputPort {
         RoomChargeEntity roomChargeEntity = RoomChargeEntity.from(roomChargeForCreate);
         return roomChargeRepository.save(roomChargeEntity).toDomain();
     }
+
+    public RoomCharge updateCharge(RoomCharge roomCharge, Integer charge) {
+        roomCharge.updateCharge(charge);
+        RoomChargeEntity roomChargeEntity = RoomChargeEntity.fromDomain(roomCharge);
+        return roomChargeRepository.save(roomChargeEntity).toDomain();
+    }
 }

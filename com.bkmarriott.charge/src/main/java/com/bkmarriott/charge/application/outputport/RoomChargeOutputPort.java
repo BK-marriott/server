@@ -11,4 +11,6 @@ public interface RoomChargeOutputPort {
     Optional<RoomCharge> findById(RoomChargeForFind roomChargeForFind);
 
     RoomCharge create(RoomChargeForCreate roomChargeForCreate);
+
+    RoomCharge updateCharge(RoomCharge roomCharge, Integer charge);
 }

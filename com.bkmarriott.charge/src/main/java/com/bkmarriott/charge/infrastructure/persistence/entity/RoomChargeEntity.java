@@ -39,4 +39,13 @@ public class RoomChargeEntity extends BaseEntity {
                 roomCharge.charge()
         );
     }
+
+    public static RoomChargeEntity fromDomain(RoomCharge roomCharge) {
+        return new RoomChargeEntity(
+                roomCharge.getHotelId(),
+                RoomEntityType.fromDomain(roomCharge.getRoomType()),
+                roomCharge.getDate(),
+                roomCharge.getCharge()
+        );
+    }
 }
