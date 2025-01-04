@@ -33,11 +33,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.1'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -70,9 +73,8 @@ jacocoTestReport {
 
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, excludes: [
-					"**/config/*",
-					"**/entity/*",
-					"**/util/*"])
+					"**/config/*", "**/entity/*", "**/util/*", "**/exception/*",
+					"**/dto/*", "**/infrastructure/cache/*", "**/infrastructure/event/*"])
 		}))
 	}
 
@@ -98,7 +100,8 @@ jacocoTestCoverageVerification {
 			}
 
 			excludes = ["*.*Config", "*.*Entity*", "*.*Application", "*.dto.*",
-						"*.util.*", "*.exception.*", "*.*Query*"
+						"*.util.*", "*.exception.*", "*.*Query*", "*.*Scheduler",
+						"*.infrastructure.cache.*", "*.infrastructure.event.*"
 			]
 		}
 	}
