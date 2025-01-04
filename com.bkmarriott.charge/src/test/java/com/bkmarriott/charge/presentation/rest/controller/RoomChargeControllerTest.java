@@ -3,7 +3,7 @@ package com.bkmarriott.charge.presentation.rest.controller;
 import com.bkmarriott.charge.application.service.RoomChargeService;
 import com.bkmarriott.charge.domain.RoomCharge;
 import com.bkmarriott.charge.domain.vo.RoomChargeForCreate;
-import com.bkmarriott.charge.domain.vo.RoomChargeForFind;
+import com.bkmarriott.charge.domain.vo.RoomChargeId;
 import com.bkmarriott.charge.domain.vo.RoomType;
 import com.bkmarriott.charge.presentation.rest.dto.CreateRoomCharge;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +48,7 @@ class RoomChargeControllerTest {
                 new CreateRoomCharge.Request(hotelId, roomType, date, charge)
         );
 
-        RoomCharge mockRoomCharge = new RoomCharge(hotelId, roomType, date, charge);
+        RoomCharge mockRoomCharge = new RoomCharge(RoomChargeId.of(hotelId, roomType, date), charge);
         Mockito.when(roomChargeService.create(ArgumentMatchers.any(RoomChargeForCreate.class)))
                 .thenReturn(mockRoomCharge);
 
@@ -75,8 +75,8 @@ class RoomChargeControllerTest {
         String requestUrl = String.format("/api/v1/charges?hotelId=%d&roomType=%s&date=%s",
                 hotelId, roomType.name(), date);
 
-        RoomCharge mockRoomCharge = new RoomCharge(hotelId, roomType, date, charge);
-        Mockito.when(roomChargeService.findOne(ArgumentMatchers.any(RoomChargeForFind.class)))
+        RoomCharge mockRoomCharge = new RoomCharge(RoomChargeId.of(hotelId, roomType, date), charge);
+        Mockito.when(roomChargeService.findOne(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(mockRoomCharge);
 
         // When & Then
@@ -103,7 +103,7 @@ class RoomChargeControllerTest {
                 new CreateRoomCharge.Request(hotelId, roomType, date, charge)
         );
 
-        RoomCharge mockRoomCharge = new RoomCharge(hotelId, roomType, date, charge);
+        RoomCharge mockRoomCharge = new RoomCharge(RoomChargeId.of(hotelId, roomType, date), charge);
         Mockito.when(roomChargeService.update(ArgumentMatchers.any(RoomChargeForCreate.class)))
                 .thenReturn(mockRoomCharge);
 

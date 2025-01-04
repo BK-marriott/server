@@ -5,7 +5,7 @@ import com.bkmarriott.charge.application.exception.RoomChargeNotFoundException;
 import com.bkmarriott.charge.application.outputport.RoomChargeOutputPort;
 import com.bkmarriott.charge.domain.RoomCharge;
 import com.bkmarriott.charge.domain.vo.RoomChargeForCreate;
-import com.bkmarriott.charge.domain.vo.RoomChargeForFind;
+import com.bkmarriott.charge.domain.vo.RoomChargeId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,32 +20,28 @@ public class RoomChargeService {
 
     @Transactional
     public RoomCharge create(RoomChargeForCreate roomChargeForCreate) {
-        log.debug("[RoomChargeService] [create] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.hotelId(), roomChargeForCreate.roomType());
+        log.debug("[RoomChargeService] [create] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.id().hotelId(), roomChargeForCreate.id().roomType());
 
-        roomChargeOutputPort.findById(
-                RoomChargeForFind.of(roomChargeForCreate.hotelId(), roomChargeForCreate.roomType(), roomChargeForCreate.date())
-        ).ifPresent(roomCharge -> {
+        roomChargeOutputPort.findById(roomChargeForCreate.id()).ifPresent(roomCharge -> {
             throw new RoomChargeDuplicatedException();
         });
 
         return roomChargeOutputPort.create(roomChargeForCreate);
     }
 
-    public RoomCharge findOne(RoomChargeForFind roomChargeForFind) {
-        log.debug("[RoomChargeService] [findOne] hotelId ::: {}, roomType ::: {}", roomChargeForFind.hotelId(), roomChargeForFind.roomType());
+    public RoomCharge findOne(RoomChargeId roomChargeId) {
+        log.debug("[RoomChargeService] [findOne] hotelId ::: {}, roomType ::: {}", roomChargeId.hotelId(), roomChargeId.roomType());
 
-        return roomChargeOutputPort.findById(
-                RoomChargeForFind.of(roomChargeForFind.hotelId(), roomChargeForFind.roomType(), roomChargeForFind.date())
-        ).orElseThrow(RoomChargeNotFoundException::new);
+        return roomChargeOutputPort.findById(roomChargeId)
+                .orElseThrow(RoomChargeNotFoundException::new);
     }
 
     @Transactional
     public RoomCharge update(RoomChargeForCreate roomChargeForCreate) {
-        log.debug("[RoomChargeService] [update] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.hotelId(), roomChargeForCreate.roomType());
+        log.debug("[RoomChargeService] [update] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.id().hotelId(), roomChargeForCreate.id().roomType());
 
-        RoomCharge roomCharge = roomChargeOutputPort.findById(
-                RoomChargeForFind.of(roomChargeForCreate.hotelId(), roomChargeForCreate.roomType(), roomChargeForCreate.date())
-        ).orElseThrow(RoomChargeNotFoundException::new);
+        RoomCharge roomCharge = roomChargeOutputPort.findById(roomChargeForCreate.id())
+                .orElseThrow(RoomChargeNotFoundException::new);
 
         return roomChargeOutputPort.updateCharge(roomCharge, roomChargeForCreate.charge());
     }

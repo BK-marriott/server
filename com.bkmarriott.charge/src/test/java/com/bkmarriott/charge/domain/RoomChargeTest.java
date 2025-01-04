@@ -1,5 +1,6 @@
 package com.bkmarriott.charge.domain;
 
+import com.bkmarriott.charge.domain.vo.RoomChargeId;
 import com.bkmarriott.charge.domain.vo.RoomType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,13 +20,13 @@ class RoomChargeTest {
     @DisplayName("[RoomCharge 생성 성공 테스트] RoomCharge 도메인 객체를 생성한다.")
     void createRoomCharge_successTest() {
         // Given & When
-        RoomCharge roomCharge = new RoomCharge(hotelId, roomType, date, charge);
+        RoomCharge roomCharge = new RoomCharge(RoomChargeId.of(hotelId, roomType, date), charge);
 
         // Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals(hotelId, roomCharge.getHotelId()),
-                () -> Assertions.assertEquals(roomType, roomCharge.getRoomType()),
-                () -> Assertions.assertEquals(date, roomCharge.getDate()),
+                () -> Assertions.assertEquals(hotelId, roomCharge.getId().hotelId()),
+                () -> Assertions.assertEquals(roomType, roomCharge.getId().roomType()),
+                () -> Assertions.assertEquals(date, roomCharge.getId().date()),
                 () -> Assertions.assertEquals(charge, roomCharge.getCharge())
         );
     }

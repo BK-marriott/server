@@ -6,7 +6,7 @@ import com.bkmarriott.charge.application.exception.RoomChargeNotFoundException;
 import com.bkmarriott.charge.application.outputport.RoomChargeOutputPort;
 import com.bkmarriott.charge.domain.RoomCharge;
 import com.bkmarriott.charge.domain.vo.RoomChargeForCreate;
-import com.bkmarriott.charge.domain.vo.RoomChargeForFind;
+import com.bkmarriott.charge.domain.vo.RoomChargeId;
 import com.bkmarriott.charge.domain.vo.RoomType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -42,10 +42,10 @@ class RoomChargeServiceTest {
         Integer charge = 10000;
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(hotelId, roomType, date, charge);
 
-        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(Optional.empty());
 
-        RoomCharge mockRoomCharge = new RoomCharge(hotelId, roomType, date, charge);
+        RoomCharge mockRoomCharge = new RoomCharge(RoomChargeId.of(hotelId, roomType, date), charge);
         Mockito.when(roomChargeOutputPort.create(ArgumentMatchers.any(RoomChargeForCreate.class)))
                 .thenReturn(mockRoomCharge);
 
@@ -54,9 +54,9 @@ class RoomChargeServiceTest {
 
         // Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals(hotelId, result.getHotelId()),
-                () -> Assertions.assertEquals(roomType, result.getRoomType()),
-                () -> Assertions.assertEquals(date, result.getDate()),
+                () -> Assertions.assertEquals(hotelId, result.getId().hotelId()),
+                () -> Assertions.assertEquals(roomType, result.getId().roomType()),
+                () -> Assertions.assertEquals(date, result.getId().date()),
                 () -> Assertions.assertEquals(charge, result.getCharge())
         );
     }
@@ -67,7 +67,7 @@ class RoomChargeServiceTest {
         // Given
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 10000);
 
-        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(Optional.of(Mockito.mock(RoomCharge.class)));
 
         // When & Then
@@ -86,20 +86,20 @@ class RoomChargeServiceTest {
         RoomType roomType = RoomType.STANDARD;
         LocalDate date = LocalDate.of(2025, 1, 1);
         Integer charge = 10000;
-        RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(hotelId, roomType, date);
+        RoomChargeId roomChargeId = RoomChargeId.of(hotelId, roomType, date);
 
-        RoomCharge mockRoomCharge = new RoomCharge(hotelId, roomType, date, charge);
-        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+        RoomCharge mockRoomCharge = new RoomCharge(roomChargeId, charge);
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(Optional.of(mockRoomCharge));
 
         // When
-        RoomCharge result = roomChargeService.findOne(roomChargeForFind);
+        RoomCharge result = roomChargeService.findOne(roomChargeId);
 
         // Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals(hotelId, result.getHotelId()),
-                () -> Assertions.assertEquals(roomType, result.getRoomType()),
-                () -> Assertions.assertEquals(date, result.getDate()),
+                () -> Assertions.assertEquals(hotelId, result.getId().hotelId()),
+                () -> Assertions.assertEquals(roomType, result.getId().roomType()),
+                () -> Assertions.assertEquals(date, result.getId().date()),
                 () -> Assertions.assertEquals(charge, result.getCharge())
         );
     }
@@ -108,14 +108,14 @@ class RoomChargeServiceTest {
     @DisplayName("[객실 요금 조회 실패 테스트] 존재하지 않는 객실 타입인 경우 예외를 발생시킨다.")
     void find_failTest_invalidType() {
         // Given
-        RoomChargeForFind roomChargeForFind = RoomChargeForFind.of(1L, RoomType.STANDARD, LocalDate.now());
+        RoomChargeId roomChargeId = RoomChargeId.of(1L, RoomType.STANDARD, LocalDate.now());
 
-        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(Optional.empty());
 
         // When & Then
         Assertions.assertAll(
-                () -> assertThatThrownBy(() -> roomChargeService.findOne(roomChargeForFind))
+                () -> assertThatThrownBy(() -> roomChargeService.findOne(roomChargeId))
                         .isInstanceOf(RoomChargeNotFoundException.class)
                         .hasMessage(RoomChargeErrorMessage.ROOM_CHARGE_NOT_EXIST.getMessage())
         );
@@ -131,10 +131,10 @@ class RoomChargeServiceTest {
         Integer newCharge = 10000;
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(hotelId, roomType, date, newCharge);
 
-        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(Optional.of(Mockito.mock(RoomCharge.class)));
 
-        RoomCharge newMockRoomCharge = new RoomCharge(hotelId, roomType, date, newCharge);
+        RoomCharge newMockRoomCharge = new RoomCharge(RoomChargeId.of(hotelId, roomType, date), newCharge);
         Mockito.when(roomChargeOutputPort.updateCharge(ArgumentMatchers.any(RoomCharge.class), ArgumentMatchers.any()))
                 .thenReturn(newMockRoomCharge);
 
@@ -143,9 +143,9 @@ class RoomChargeServiceTest {
 
         // Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals(hotelId, result.getHotelId()),
-                () -> Assertions.assertEquals(roomType, result.getRoomType()),
-                () -> Assertions.assertEquals(date, result.getDate()),
+                () -> Assertions.assertEquals(hotelId, result.getId().hotelId()),
+                () -> Assertions.assertEquals(roomType, result.getId().roomType()),
+                () -> Assertions.assertEquals(date, result.getId().date()),
                 () -> Assertions.assertEquals(newCharge, result.getCharge())
         );
     }
@@ -156,7 +156,7 @@ class RoomChargeServiceTest {
         // Given
         RoomChargeForCreate roomChargeForCreate = RoomChargeForCreate.of(1L, RoomType.STANDARD, LocalDate.now(), 1000);
 
-        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeForFind.class)))
+        Mockito.when(roomChargeOutputPort.findById(ArgumentMatchers.any(RoomChargeId.class)))
                 .thenReturn(Optional.empty());
 
         // When & Then

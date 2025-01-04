@@ -19,7 +19,7 @@ public class CreateRoomCharge {
         private Integer charge;
 
         public RoomChargeForCreate toDomain() {
-            return new RoomChargeForCreate(hotelId, roomType, date, charge);
+            return RoomChargeForCreate.of(hotelId, roomType, date, charge);
         }
     }
 }

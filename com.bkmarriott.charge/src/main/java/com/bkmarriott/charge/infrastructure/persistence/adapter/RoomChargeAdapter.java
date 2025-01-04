@@ -3,9 +3,9 @@ package com.bkmarriott.charge.infrastructure.persistence.adapter;
 import com.bkmarriott.charge.application.outputport.RoomChargeOutputPort;
 import com.bkmarriott.charge.domain.RoomCharge;
 import com.bkmarriott.charge.domain.vo.RoomChargeForCreate;
-import com.bkmarriott.charge.domain.vo.RoomChargeForFind;
+import com.bkmarriott.charge.domain.vo.RoomChargeId;
 import com.bkmarriott.charge.infrastructure.persistence.entity.RoomChargeEntity;
-import com.bkmarriott.charge.infrastructure.persistence.entity.RoomChargeId;
+import com.bkmarriott.charge.infrastructure.persistence.entity.RoomChargeEntityId;
 import com.bkmarriott.charge.infrastructure.persistence.repository.RoomChargeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,8 +18,8 @@ public class RoomChargeAdapter implements RoomChargeOutputPort {
 
     private final RoomChargeRepository roomChargeRepository;
 
-    public Optional<RoomCharge> findById(RoomChargeForFind roomChargeForFind) {
-        return roomChargeRepository.findByIdAndIsDeletedFalse(RoomChargeId.fromDomain(roomChargeForFind))
+    public Optional<RoomCharge> findById(RoomChargeId roomChargeId) {
+        return roomChargeRepository.findByIdAndIsDeletedFalse(RoomChargeEntityId.fromDomain(roomChargeId))
                 .map(RoomChargeEntity::toDomain);
     }
 

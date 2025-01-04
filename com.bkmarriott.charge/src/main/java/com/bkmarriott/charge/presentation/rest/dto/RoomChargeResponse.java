@@ -13,15 +13,15 @@ public class RoomChargeResponse {
 
     private Long hotelId;
     private RoomType roomType;
-    private Integer charge;
     private LocalDate date;
+    private Integer charge;
 
     public static RoomChargeResponse from(RoomCharge roomCharge) {
         return new RoomChargeResponse(
-                roomCharge.getHotelId(),
-                roomCharge.getRoomType(),
-                roomCharge.getCharge(),
-                roomCharge.getDate()
+                roomCharge.getId().hotelId(),
+                roomCharge.getId().roomType(),
+                roomCharge.getId().date(),
+                roomCharge.getCharge()
         );
     }
 }
