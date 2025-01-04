@@ -42,18 +42,4 @@ public class CouponEventPersistenceAdapter implements CouponOutputPort {
     public List<CouponIssuanceOutboxEntity> findBeforePublished() {
         return outboxRepository.findAllByIsPublishedIsFalse();
     }
-
-    public List<DomainEventEnvelop<CouponIssuanceEvent>> findBeforePublishedEventEnvelop() {
-        return outboxRepository.findAllByIsPublishedIsFalse()
-            .stream()
-            .map(entity -> {
-                CouponIssuanceEvent event = eventConverter.convertFromJson(entity.getPayload(),
-                    entity.getEventType());
-                return DomainEventEnvelop.valueOf(
-                    event, entity.getUuid(), entity.getCreatedAt(),
-                    entity.getEventType(), entity.getSource()
-                );
-            })
-            .toList();
-    }
 }
