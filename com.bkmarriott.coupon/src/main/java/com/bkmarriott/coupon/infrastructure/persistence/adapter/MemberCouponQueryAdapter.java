@@ -7,6 +7,8 @@ import com.bkmarriott.coupon.infrastructure.persistence.repository.MemberCouponR
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -18,5 +20,11 @@ public class MemberCouponQueryAdapter implements MemberCouponOutputPort {
         return memberCouponRepository.findValidCouponById(id, LocalDateTime.now())
                 .map(MemberCouponEntity::toDomain)
                 .orElseThrow(RuntimeException::new);
+    }
+
+    @Transactional
+    public MemberCoupon generateMemberCoupon(MemberCoupon memberCoupon) {
+        MemberCouponEntity memberCouponEntity = memberCouponRepository.save(MemberCouponEntity.from(memberCoupon));
+        return memberCouponEntity.toDomain();
     }
 }
