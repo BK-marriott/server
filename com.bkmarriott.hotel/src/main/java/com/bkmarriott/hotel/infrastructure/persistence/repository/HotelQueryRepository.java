@@ -9,7 +9,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +21,6 @@ import java.util.List;
 import static com.bkmarriott.hotel.infrastructure.persistence.mapper.HotelEntityMapper.HOTEL_ENTITY_MAPPER;
 import static com.bkmarriott.hotel.infrastructure.persistence.entity.QHotelEntity.hotelEntity;
 
-@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class HotelQueryRepository {
