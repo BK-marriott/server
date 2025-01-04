@@ -37,7 +37,24 @@ public class CouponEntity extends BaseEntity {
     @Column(nullable = false)
     private Float discountRate;
 
+    public CouponEntity(Long id, CouponPolicyEntity couponPolicy, String name, Float discountRate) {
+        this.id = id;
+        this.couponPolicy = couponPolicy;
+        this.name = name;
+        this.discountRate = discountRate;
+    }
+
     public Coupon toDomain() {
         return new Coupon(id, couponPolicy.toDomain(), name, discountRate);
     }
+
+    public static CouponEntity from(Coupon coupon) {
+        return new CouponEntity(
+                coupon.getId(),
+                CouponPolicyEntity.from(coupon.getCouponPolicy()),
+                coupon.getName(),
+                coupon.getDiscountRate()
+        );
+    }
+
 }

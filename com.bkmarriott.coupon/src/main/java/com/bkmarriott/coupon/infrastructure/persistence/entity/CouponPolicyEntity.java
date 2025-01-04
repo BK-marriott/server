@@ -36,8 +36,26 @@ public class CouponPolicyEntity extends BaseEntity {
 
     private LocalDateTime endedAt;
 
+    public CouponPolicyEntity(Long id, CouponPolicyEntityType type, Integer afterDay, LocalDateTime startedAt,
+                              LocalDateTime endedAt) {
+        this.id = id;
+        this.type = type;
+        this.afterDay = afterDay;
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
+    }
+
     public CouponPolicy toDomain() {
         return new CouponPolicy(id, type, afterDay, startedAt, endedAt);
     }
 
+    public static CouponPolicyEntity from(CouponPolicy couponPolicy) {
+        return new CouponPolicyEntity(
+                couponPolicy.getId(),
+                couponPolicy.getType(),
+                couponPolicy.getAfterDay(),
+                couponPolicy.getStartedAt(),
+                couponPolicy.getEndedAt()
+        );
+    }
 }

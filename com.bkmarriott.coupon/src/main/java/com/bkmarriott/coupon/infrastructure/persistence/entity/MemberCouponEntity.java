@@ -39,7 +39,28 @@ public class MemberCouponEntity {
     @Column(nullable = false)
     private LocalDateTime expiredAt;
 
+    public MemberCouponEntity(Long id, CouponEntity coupon, Long memberId, LocalDateTime issuanceAt,
+                              LocalDateTime spendingAt, LocalDateTime expiredAt) {
+        this.id = id;
+        this.coupon = coupon;
+        this.memberId = memberId;
+        this.issuanceAt = issuanceAt;
+        this.spendingAt = spendingAt;
+        this.expiredAt = expiredAt;
+    }
+
     public MemberCoupon toDomain() {
         return new MemberCoupon(id, coupon.toDomain(), memberId, issuanceAt, spendingAt, expiredAt);
+    }
+
+    public static MemberCouponEntity from(MemberCoupon memberCoupon) {
+        return new MemberCouponEntity(
+                memberCoupon.getId(),
+                CouponEntity.from(memberCoupon.getCoupon()),
+                memberCoupon.getMemberId(),
+                memberCoupon.getIssuanceAt(),
+                memberCoupon.getSpendingAt(),
+                memberCoupon.getExpiredAt()
+        );
     }
 }
