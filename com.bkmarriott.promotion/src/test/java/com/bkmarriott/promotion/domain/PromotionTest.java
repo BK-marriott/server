@@ -28,10 +28,9 @@ class PromotionTest {
         String description = "description";
         Integer maxIssuance = 100;
         // When & Then
+        Promotion promotion = new Promotion(promotionId, couponId, name, description, maxIssuance, TEST_PERIOD);
         Assertions.assertAll(
-            () -> Assertions.assertDoesNotThrow(() ->
-                new Promotion(promotionId, couponId, name, description, maxIssuance, TEST_PERIOD)
-            )
+            () -> Assertions.assertEquals(couponId, promotion.getCouponId())
         );
     }
 

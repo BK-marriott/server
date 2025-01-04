@@ -33,4 +33,8 @@ public class Promotion {
     public boolean isMaxIssuanceNotReached(Integer currentIssuance) {
         return currentIssuance < maxIssuance;
     }
+
+    public Long getCouponId() {
+        return couponId;
+    }
 }
