@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,6 @@ public class InventoryService {
   private final InventoryCommandOutputPort inventoryCommandOutputPort;
   private final InventoryQueryOutputPort inventoryQueryOutputPort;
   private final ReservationQueryOutputPort reservationQueryOutputPort;
-
 
   public List<Inventory> updateTotalReserved(Long reservationId) {
 
@@ -66,7 +66,7 @@ public class InventoryService {
 
   }
 
-  public List<Response> getInventoryQuantity(Long hotelId, LocalDate startDate, LocalDate endDate) {
+public List<Response> getInventoryQuantity(Long hotelId, LocalDate startDate, LocalDate endDate) {
 
     List<InventoryQueryResponseDto> availableRooms = inventoryQueryOutputPort
         .findAvailableRoomsByHotelIdAndDateRange(new InventoryQueryRequestDto(
