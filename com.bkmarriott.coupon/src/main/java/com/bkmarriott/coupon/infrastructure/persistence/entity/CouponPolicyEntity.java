@@ -52,7 +52,7 @@ public class CouponPolicyEntity extends BaseEntity {
     public static CouponPolicyEntity from(CouponPolicy couponPolicy) {
         return new CouponPolicyEntity(
                 couponPolicy.getId(),
-                couponPolicy.getType(),
+                CouponPolicyEntityType.valueOf(couponPolicy.getType().name()),
                 couponPolicy.getAfterDay(),
                 couponPolicy.getStartedAt(),
                 couponPolicy.getEndedAt()
