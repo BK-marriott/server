@@ -38,4 +38,9 @@ public class BaseEntity {
         this.createdBy = 0L;
         this.updatedBy = 0L;
     }
+
+    protected void createdByUser(Long userId) {
+        this.createdBy = userId;
+        this.updatedBy = userId;
+    }
 }

@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -42,6 +41,7 @@ public class MemberCouponEntity extends BaseEntity {
 
     public MemberCouponEntity(Long id, CouponEntity coupon, Long memberId, LocalDateTime issuanceAt,
                               LocalDateTime spendingAt, LocalDateTime expiredAt) {
+        super.createdByUser(memberId);
         this.id = id;
         this.coupon = coupon;
         this.memberId = memberId;
