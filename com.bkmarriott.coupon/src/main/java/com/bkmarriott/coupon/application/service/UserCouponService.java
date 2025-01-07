@@ -20,4 +20,14 @@ public class UserCouponService {
 
         return userCouponOutputPort.generateUserCoupon(userCoupon);
     }
+
+    public void useUserCoupon(Long id) {
+        UserCoupon userCoupon = userCouponOutputPort.findValidCouponById(id);
+//        UserCoupon userCoupon = userCouponOutputPort.useUserCoupon(id);
+//        userCoupon.updateSpentIt();
+        userCoupon = userCoupon.updateSpentAt();
+        userCoupon = userCouponOutputPort.update(userCoupon);
+//        userCouponOutputPort.useUserCoupon(userCoupon.getId());
+    }
+
 }

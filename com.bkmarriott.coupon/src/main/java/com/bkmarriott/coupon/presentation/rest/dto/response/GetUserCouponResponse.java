@@ -4,7 +4,7 @@ import com.bkmarriott.coupon.domain.Coupon;
 import com.bkmarriott.coupon.domain.UserCoupon;
 import java.time.LocalDateTime;
 
-public record GetMemberCouponResponse(
+public record GetUserCouponResponse(
         Long id,
         Coupon coupon,
         Long memberId,
@@ -12,8 +12,8 @@ public record GetMemberCouponResponse(
         LocalDateTime spendingAt,
         LocalDateTime expiredAt
 ) {
-    public static GetMemberCouponResponse from(UserCoupon userCoupon) {
-        return new GetMemberCouponResponse(
+    public static GetUserCouponResponse from(UserCoupon userCoupon) {
+        return new GetUserCouponResponse(
                 userCoupon.getId(),
                 userCoupon.getCoupon(),
                 userCoupon.getUserId(),
