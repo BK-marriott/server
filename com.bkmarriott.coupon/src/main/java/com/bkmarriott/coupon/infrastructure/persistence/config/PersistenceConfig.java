@@ -11,8 +11,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @Configuration
 public class PersistenceConfig {
 
-    @Bean
-    public UserCouponQueryAdapter memberCouponQueryAdapter(@Autowired UserCouponRepository memberCouponRepository) {
-        return new UserCouponQueryAdapter(memberCouponRepository);
-    }
 }
