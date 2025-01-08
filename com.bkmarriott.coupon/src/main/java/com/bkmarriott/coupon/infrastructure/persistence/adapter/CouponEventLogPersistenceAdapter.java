@@ -1,6 +1,7 @@
 package com.bkmarriott.coupon.infrastructure.persistence.adapter;
 
 import com.bkmarriott.coupon.application.outputport.CouponEventLogOutputPort;
+import com.bkmarriott.coupon.infrastructure.persistence.entity.CouponIssuanceEventLogEntity;
 import com.bkmarriott.coupon.infrastructure.persistence.repository.CouponIssuanceEventLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,5 +15,13 @@ public class CouponEventLogPersistenceAdapter implements CouponEventLogOutputPor
     @Override
     public boolean isExistedCouponLog(String logId) {
         return couponIssuanceEventLogRepository.findById(logId).isPresent();
+    }
+
+    @Override
+    public String generateCouponLog(String LogId) {
+        CouponIssuanceEventLogEntity logEntity = new CouponIssuanceEventLogEntity(LogId);
+        logEntity = couponIssuanceEventLogRepository.save(logEntity);
+
+        return logEntity.getId();
     }
 }
