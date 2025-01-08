@@ -41,6 +41,7 @@ public class UserCouponEntity extends BaseEntity {
     private LocalDateTime expiredAt;
 
     @Version
+    @Column(nullable = false)
     private Long version;
 
     public UserCouponEntity(Long id, CouponEntity coupon, Long userId, LocalDateTime issuanceAt,
