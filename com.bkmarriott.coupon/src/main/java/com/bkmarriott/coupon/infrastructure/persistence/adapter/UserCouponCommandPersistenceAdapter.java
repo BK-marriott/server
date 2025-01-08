@@ -8,9 +8,11 @@ import com.bkmarriott.coupon.presentation.rest.exception.UserCouponNotFoundExcep
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class UserCouponCommandPersistenceAdapter implements UserCouponOutputPort {
@@ -20,6 +22,8 @@ public class UserCouponCommandPersistenceAdapter implements UserCouponOutputPort
     @Override
     @Transactional
     public UserCoupon generateUserCoupon(UserCoupon userCoupon) {
+        log.info("[UserCouponCommandPersistenceAdapter] [generateUserCoupon] couponId ::: {}", userCoupon.getId());
+
         UserCouponEntity userCouponEntity = UserCouponEntity.from(userCoupon);
         userCouponEntity = userCouponRepository.save(userCouponEntity);
 
@@ -28,6 +32,8 @@ public class UserCouponCommandPersistenceAdapter implements UserCouponOutputPort
 
     @Override
     public UserCoupon findValidCouponById(Long userCouponId) {
+        log.info("[UserCouponCommandPersistenceAdapter] [findValidCouponById] couponId ::: {}", userCouponId);
+
         UserCouponEntity userCouponEntity =
                 userCouponRepository.findValidCouponById(userCouponId, LocalDateTime.now())
                         .orElseThrow(UserCouponNotFoundException::new);
@@ -38,6 +44,8 @@ public class UserCouponCommandPersistenceAdapter implements UserCouponOutputPort
     @Override
     @Transactional
     public UserCoupon update(UserCoupon userCoupon) {
+        log.info("[UserCouponCommandPersistenceAdapter] [update] couponId ::: {}", userCoupon.getId());
+
         UserCouponEntity userCouponEntity = userCouponRepository.findValidCouponById(userCoupon.getId(), LocalDateTime.now())
                 .orElseThrow(UserCouponNotFoundException::new);
 
