@@ -42,7 +42,7 @@ public class UserCouponCommandPersistenceAdapter implements UserCouponOutputPort
                 .orElseThrow(UserCouponNotFoundException::new);
 
         userCouponEntity = userCouponEntity.updateSpentAt(userCoupon);
-        userCouponRepository.save(userCouponEntity);
+        userCouponEntity = userCouponRepository.save(userCouponEntity);
 
         return userCouponEntity.toDomain();
     }
