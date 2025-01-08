@@ -1,7 +1,8 @@
 package com.bkmarriott.coupon.presentation.rest.controller;
 
-import com.bkmarriott.coupon.application.outputport.UserCouponOutputPort;
 import com.bkmarriott.coupon.application.service.UserCouponService;
+import com.bkmarriott.coupon.domain.UserCoupon;
+import com.bkmarriott.coupon.presentation.rest.dto.response.PatchUserCouponResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,8 +18,8 @@ public class CouponCommandController {
     private final UserCouponService userCouponService;
 
     @PatchMapping("/user-coupons/{id}")
-    public ResponseEntity<Void> useUserCoupon(@PathVariable Long id) {
-        userCouponService.useUserCoupon(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PatchUserCouponResponse> useUserCoupon(@PathVariable Long id) {
+        UserCoupon userCoupon = userCouponService.useUserCoupon(id);
+        return ResponseEntity.ok(PatchUserCouponResponse.from(userCoupon));
     }
 }
