@@ -24,7 +24,6 @@ public class UserCouponService {
     public UserCoupon useUserCoupon(Long id) {
         UserCoupon userCoupon = userCouponOutputPort.findValidCouponById(id);
         userCoupon = userCoupon.updateSpentAt();
-        userCoupon = userCouponOutputPort.update(userCoupon);
-        return userCoupon;
+        return userCouponOutputPort.update(userCoupon)
     }
 }
