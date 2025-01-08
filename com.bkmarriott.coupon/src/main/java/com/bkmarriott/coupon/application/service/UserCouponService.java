@@ -27,5 +27,4 @@ public class UserCouponService {
         userCoupon = userCouponOutputPort.update(userCoupon);
         return userCoupon;
     }
-
 }
