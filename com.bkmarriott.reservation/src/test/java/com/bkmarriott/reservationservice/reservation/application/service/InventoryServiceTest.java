@@ -1,4 +1,4 @@
-package com.bkmarriott.reservationservice.reservation.presentation.application.service;
+package com.bkmarriott.reservationservice.reservation.application.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -9,7 +9,6 @@ import com.bkmarriott.reservationservice.reservation.application.exception.Resou
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryCommandOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.ReservationQueryOutputPort;
-import com.bkmarriott.reservationservice.reservation.application.service.InventoryService;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.domain.Reservation;
 import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationStatus;

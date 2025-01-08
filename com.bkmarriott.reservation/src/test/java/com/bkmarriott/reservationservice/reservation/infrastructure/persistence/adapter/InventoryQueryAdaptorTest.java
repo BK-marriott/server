@@ -1,4 +1,4 @@
-package com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.adapter;
+package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter;
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
@@ -9,7 +9,7 @@ import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryId;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryQueryDslRepository;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryRepository;
-import com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.config.RepositoryTest;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config.RepositoryTest;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

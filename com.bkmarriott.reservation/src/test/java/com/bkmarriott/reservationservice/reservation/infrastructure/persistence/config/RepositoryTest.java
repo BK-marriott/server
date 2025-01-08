@@ -1,4 +1,4 @@
-package com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.config;
+package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

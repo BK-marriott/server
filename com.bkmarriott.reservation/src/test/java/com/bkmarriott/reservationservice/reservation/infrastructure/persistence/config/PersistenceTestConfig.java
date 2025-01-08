@@ -1,4 +1,4 @@
-package com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.config;
+package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config;
 
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.InventoryCommandAdaptor;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.InventoryQueryAdaptor;

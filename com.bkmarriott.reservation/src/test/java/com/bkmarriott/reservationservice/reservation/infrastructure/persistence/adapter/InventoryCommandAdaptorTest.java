@@ -1,10 +1,8 @@
-package com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.adapter;
+package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter;
 
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.InventoryCommandAdaptor;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter.InventoryQueryAdaptor;
-import com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.config.RepositoryTest;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config.RepositoryTest;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
