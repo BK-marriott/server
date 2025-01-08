@@ -76,5 +76,4 @@ public class UserCouponEntity extends BaseEntity {
         this.spendingAt = userCoupon.getSpentAt();
         return this;
     }
-
 }
