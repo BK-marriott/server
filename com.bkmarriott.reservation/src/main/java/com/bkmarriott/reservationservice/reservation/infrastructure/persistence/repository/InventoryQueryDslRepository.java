@@ -3,8 +3,8 @@ package com.bkmarriott.reservationservice.reservation.infrastructure.persistence
 import static com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.QRoomTypeInventoryEntity.*;
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
-import com.bkmarriott.reservationservice.reservation.application.dto.QInventoryQueryResponseDto;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.dto.InventoryQuery;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.dto.QInventoryQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ public class InventoryQueryDslRepository {
 
   private final JPAQueryFactory queryFactory;
 
-  public List<InventoryQueryResponseDto> findAvailableRoomsByHotelIdAndDateRange(
+  public List<InventoryQuery> findAvailableRoomsByHotelIdAndDateRange(
       InventoryQueryRequestDto requestDto) {
     return queryFactory
         .select(
-            new QInventoryQueryResponseDto(
+            new QInventoryQuery(
               roomTypeInventoryEntity.id.roomType,
               roomTypeInventoryEntity.totalInventory.subtract(roomTypeInventoryEntity.totalReserved).min()
             )

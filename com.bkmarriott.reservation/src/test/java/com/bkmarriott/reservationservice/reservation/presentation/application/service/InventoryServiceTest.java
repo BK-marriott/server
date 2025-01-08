@@ -14,7 +14,6 @@ import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.domain.Reservation;
 import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationStatus;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomEntityType;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -152,9 +151,9 @@ class InventoryServiceTest {
     InventoryQueryRequestDto requestDto = new InventoryQueryRequestDto(hotelId, startDate, endDate);
 
     List<InventoryQueryResponseDto> mockResponse = List.of(
-        new InventoryQueryResponseDto(RoomEntityType.DELUXE, 2),
-        new InventoryQueryResponseDto(RoomEntityType.STANDARD, 44),
-        new InventoryQueryResponseDto(RoomEntityType.TWIN, 33)
+        new InventoryQueryResponseDto(RoomType.DELUXE, 2),
+        new InventoryQueryResponseDto(RoomType.STANDARD, 44),
+        new InventoryQueryResponseDto(RoomType.TWIN, 33)
     );
     Mockito.when(inventoryQueryOutputPort.findAvailableRoomsByHotelIdAndDateRange(requestDto)
         ).thenReturn(mockResponse);

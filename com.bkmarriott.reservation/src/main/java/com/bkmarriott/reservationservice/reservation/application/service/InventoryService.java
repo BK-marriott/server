@@ -9,7 +9,6 @@ import com.bkmarriott.reservationservice.reservation.application.outputport.Rese
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.domain.Reservation;
 import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationStatus;
-import com.bkmarriott.reservationservice.reservation.presentation.rest.dto.query.InventoryQuery.Response;
 import com.bkmarriott.reservationservice.reservation.application.exception.ResourceNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,7 +65,7 @@ public class InventoryService {
 
   }
 
-  public List<Response> getInventoryQuantity(Long hotelId, LocalDate startDate, LocalDate endDate) {
+  public List<InventoryQueryResponseDto> getInventoryQuantity(Long hotelId, LocalDate startDate, LocalDate endDate) {
 
     List<InventoryQueryResponseDto> availableRooms = inventoryQueryOutputPort
         .findAvailableRoomsByHotelIdAndDateRange(new InventoryQueryRequestDto(
@@ -79,6 +78,6 @@ public class InventoryService {
       throw new IllegalArgumentException("예약 가능 객실 수량 조회 결과가 없습니다.");
     }
 
-    return availableRooms.stream().map(Response::from).toList();
+    return availableRooms;
   }
 }
