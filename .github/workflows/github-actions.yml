@@ -13,25 +13,18 @@ jobs:
         service:
           - name: "eureka"
             folder: "com.bkmarriott.eureka"
-            yml: "EUREKA_SERVER_APPLICATION_DEV_YML"
           - name: "auth"
             folder: "com.bkmarriott.auth"
-            yml: "AUTH_APPLICATION_DEV_YML"
           - name: "charge"
             folder: "com.bkmarriott.charge"
-            yml: "CHARGE_APPLICATION_DEV_YML"
           - name: "coupon"
             folder: "com.bkmarriott.coupon"
-            yml: "COUPON_APPLICATION_DEV_YML"
           - name: "gateway"
             folder: "com.bkmarriott.gateway"
-            yml: "GATEWAY_APPLICATION_DEV_YML"
           - name: "hotel"
             folder: "com.bkmarriott.hotel"
-            yml: "HOTEL_APPLICATION_DEV_YML"
           - name: "promotion"
             folder: "com.bkmarriott.promotion"
-            yml: "PROMOTION_APPLICATION_DEV_YML"
 #          - name: "reservation"
 #            folder: "com.bkmarriott.reservation"
     steps:
@@ -48,7 +41,21 @@ jobs:
         env:
           DYNAMIC_YML_SECRET: ${{ secrets['${{ matrix.service.yml }}'] }}
         run: |
-          echo "$DYNAMIC_YML_SECRET" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          if [ "${{ matrix.service.name }}" == "eureka" ]; then
+            echo "${{ secrets.EUREKA_SERVER_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "auth" ]; then
+            echo "${{ secrets.AUTH_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "charge" ]; then
+            echo "${{ secrets.CHARGE_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "coupon" ]; then
+            echo "${{ secrets.COUPON_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "gateway" ]; then
+            echo "${{ secrets.GATEWAY_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "hotel" ]; then
+            echo "${{ secrets.HOTEL_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "promotion" ]; then
+            echo "${{ secrets.PROMOTION_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          fi
 
       - name: Build with Gradle
         run: |
