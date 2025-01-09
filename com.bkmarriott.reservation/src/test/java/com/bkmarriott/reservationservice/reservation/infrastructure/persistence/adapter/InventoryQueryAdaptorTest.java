@@ -1,18 +1,17 @@
-package com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.adapter;
+package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter;
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomEntityType;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryEntity;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryId;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryQueryDslRepository;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryRepository;
-import com.bkmarriott.reservationservice.reservation.presentation.infrastructure.persistence.config.RepositoryTest;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config.RepositoryTest;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ class InventoryQueryAdaptorTest {
   @Autowired
   private InventoryRepository inventoryRepository;
   @Autowired
-  private InventoryQueryDslRepository inventoryQueryDslRepository;
+  private InventoryQueryAdaptor inventoryQueryAdaptor;
 
 
   @Test
@@ -49,7 +48,7 @@ class InventoryQueryAdaptorTest {
 
   @Test
   @DisplayName("[인벤토리 예약 가능 객실 수 조회 성공 테스트] 호텔 아이디와 숙박 일자가 주어졌을 시, 예약 가능한 타입별 객실 수를 반환한다.")
-  void find_availble_quantity_successTest() {
+  void find_available_quantity_successTest() {
 
     Long hotelId = 101L;
     LocalDate startDate = LocalDate.of(2025, 2, 1);
@@ -57,14 +56,14 @@ class InventoryQueryAdaptorTest {
 
     InventoryQueryRequestDto requestDto = new InventoryQueryRequestDto(hotelId, startDate, endDate);
 
-    List<InventoryQueryResponseDto> mockResponse = List.of(
-        new InventoryQueryResponseDto(RoomEntityType.DELUXE, 2),
-        new InventoryQueryResponseDto(RoomEntityType.STANDARD, 44),
-        new InventoryQueryResponseDto(RoomEntityType.TWIN, 33)
+    List<InventoryQuantity> mockResponse = List.of(
+        new InventoryQuantity(RoomType.DELUXE, 2),
+        new InventoryQuantity(RoomType.STANDARD, 44),
+        new InventoryQuantity(RoomType.TWIN, 33)
     );
 
     // When
-    List<InventoryQueryResponseDto> actual = inventoryQueryDslRepository.findAvailableRoomsByHotelIdAndDateRange(
+    List<InventoryQuantity> actual = inventoryQueryAdaptor.findAllInventoryQuantityByHotelIdAndDateRange(
         requestDto);
 
     // Then

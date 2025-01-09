@@ -19,4 +19,9 @@ public class Reservation {
   private LocalDate endDate;
   private RoomType roomType;
   private ReservationStatus status;
+
+  public Reservation updateStatus(ReservationStatus status) {
+    this.status = status;
+    return this;
+  }
 }

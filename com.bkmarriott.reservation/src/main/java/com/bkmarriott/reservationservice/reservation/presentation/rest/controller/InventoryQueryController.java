@@ -27,7 +27,8 @@ public class InventoryQueryController {
       @RequestParam LocalDate startDate,
       @RequestParam LocalDate endDate) {
 
-    List<Response> responseList = inventoryService.getInventoryQuantity(hotelId,startDate,endDate);
+    List<Response> responseList = inventoryService.getInventoryQuantity(hotelId,startDate,endDate)
+            .stream().map(Response::from).toList();
 
     return ApiResponse.success(responseList, HttpStatus.OK);
   }

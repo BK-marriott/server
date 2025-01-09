@@ -1,4 +1,4 @@
-package com.bkmarriott.reservationservice.reservation.infrastructure.config;
+package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
