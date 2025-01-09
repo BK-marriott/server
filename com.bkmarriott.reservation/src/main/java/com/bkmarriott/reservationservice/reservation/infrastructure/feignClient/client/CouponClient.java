@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @FeignClient(name="coupon-service")
 public interface CouponClient {
 
-    @PostMapping("/api/vi/coupons/user-coupons/{id}")
+    @PostMapping("/api/v1/coupons/user-coupons/{id}")
     CouponDto verifyCoupon(@PathVariable Long id);
 
-    @PutMapping("/api/vi/coupons/user-coupons/{id}")
+    @PutMapping("/api/v1/coupons/user-coupons/{id}")
     CouponDto useCoupon(@PathVariable Long id);
 }
