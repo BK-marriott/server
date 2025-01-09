@@ -49,8 +49,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          cd ${{ matrix.service.folder }}
-          docker build -t my-app:${{ matrix.service.name }} .
+          docker build -t bkmarriott:${{ matrix.service.name }} .
 
       - name: Push Docker Image
         env:
