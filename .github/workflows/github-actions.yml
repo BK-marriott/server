@@ -46,9 +46,9 @@ jobs:
 
       - name: Inject application.yml
         env:
-          DEV_YML: ${{ matrix.service.folder }}
+          DEV_YML: secrets.${{ matrix.service.folder }}
         run: |
-          echo "${{ secrets.$DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          echo "${{ $DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
 
       - name: Build with Gradle
         run: |
