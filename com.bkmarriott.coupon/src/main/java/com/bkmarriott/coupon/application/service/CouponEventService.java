@@ -21,9 +21,9 @@ public class CouponEventService {
         checkDuplicationEvent(envelop.getEventId());
         UserCouponForIssue userCouponForIssue = envelop.getEvent().toUserCouponForIssue();
 
-        // 이벤트 처리 로그 저장
         UserCoupon userCoupon = userCouponService.issueCoupon(userCouponForIssue);
-        this.logEvent(envelop);
+        couponEventLogOutputPort.saveLog(envelop);
+
         return userCoupon;
     }
 
@@ -33,10 +33,5 @@ public class CouponEventService {
         if (isDuplicated) {
             throw new EventDuplicateException();
         }
-    }
-
-    private void logEvent(DomainEventEnvelop<CouponIssuanceEvent> envelop) {
-        String eventId = String.valueOf(envelop.getEventId());
-        couponEventLogOutputPort.generateCouponLog(eventId);
     }
 }
