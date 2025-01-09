@@ -42,11 +42,15 @@ jobs:
           echo "${{ secrets.APPLICATION_PROD_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
 
       - name: Build with Gradle
-        run: ./gradlew :${{ matrix.service.name }}:clean :${{ matrix.service.name }}:build -x test --no-daemon
+        run: |
+          cd ${{ matrix.service.folder }}
+          ./gradlew :${{ matrix.service.name }}:clean 
+          :${{ matrix.service.name }}:build -x test --no-daemon
+
 
       - name: Build Docker Image
         run: |
-          cd ${{ matrix.service.foler }}
+          cd ${{ matrix.service.folder }}
           docker build -t my-app:${{ matrix.service.name }} .
 
       - name: Push Docker Image
