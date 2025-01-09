@@ -77,3 +77,24 @@ jobs:
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+
+      - name: Deploy Docker Image to EC2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          EC2_INSTANCE_IP: ${{ secrets.EC2_INSTANCE_IP }}
+        run: |
+          # Set up SSH Key for EC2 instance
+          echo "$EC2_SSH_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+          
+          # SSH into EC2 and run Docker commands
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_IP << 'EOF'
+            # Pull the Docker image from Docker Hub
+            docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+          
+            # Run the Docker container
+            docker run -d --name ${{ matrix.service.name }} -p 8080:8080 $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+          EOF
+          rm private_key.pem
