@@ -48,6 +48,8 @@ jobs:
           ./gradlew build -x test --no-daemon
 
       - name: Build Docker Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
           cd ${{ matrix.service.folder }}
           docker buildx build -t $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest .
