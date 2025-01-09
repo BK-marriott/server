@@ -1,11 +1,7 @@
 package com.bkmarriott.coupon.persistence.adapter;
 
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.c;
-
 import com.bkmarriott.coupon.domain.Coupon;
-import com.bkmarriott.coupon.domain.CouponPolicy;
 import com.bkmarriott.coupon.domain.UserCoupon;
-import com.bkmarriott.coupon.domain.vo.CouponPolicyType;
 import com.bkmarriott.coupon.infrastructure.persistence.adapter.UserCouponCommandPersistenceAdapter;
 import com.bkmarriott.coupon.infrastructure.persistence.entity.CouponEntity;
 import com.bkmarriott.coupon.infrastructure.persistence.entity.CouponPolicyEntity;
@@ -60,6 +56,24 @@ public class UserCouponCommandPersistenceAdapterTest {
             () -> Assertions.assertEquals(userCoupon.getUserId(), actual.getUserId()),
             () -> Assertions.assertEquals(userCoupon.getCoupon().getId(), actual.getCoupon().getId()),
             () -> Assertions.assertEquals(userCoupon.getExpiredAt(), actual.getExpiredAt())
+        );
+    }
+
+    @Test
+    @DisplayName("[성공] 유저 쿠폰 조회 테스트 - 사용가능한 쿠폰을 조회한 뒤 엔티티를 반환")
+    void findValidCouponById_successTest() {
+        // Given
+        LocalDateTime issueAt = LocalDateTime.now();
+        LocalDateTime expireTime = coupon.calcCouponExpireTime(issueAt);
+        UserCoupon userCoupon = new UserCoupon(null, coupon, 1L, issueAt, null, expireTime);
+        UserCoupon save = userCouponAdapter.generateUserCoupon(userCoupon);
+        // When
+        UserCoupon actual = userCouponAdapter.findValidCouponById(save.getId());
+        // Then
+        Assertions.assertAll(
+            () -> Assertions.assertNotNull(actual),
+            () -> Assertions.assertEquals(save.getId(), actual.getId()),
+            () -> Assertions.assertNull(save.getSpentAt())
         );
     }
 }

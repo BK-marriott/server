@@ -57,4 +57,22 @@ public class UserCouponServiceTest {
             () -> Assertions.assertEquals(issuedAt, userCoupon.getIssuedAt())
         );
     }
+
+    @Test
+    @DisplayName("[성공] 쿠폰 사용 테스트 - 쿠폰 사용 시각 업데이트")
+    void useUserCoupon_successTest() {
+        // Given
+        UserCoupon userCoupon = new UserCoupon(1L, TEST_COUPON, 1L, LocalDateTime.now(), null, LocalDateTime.MAX);
+        Mockito.when(userCouponOutputPort.findValidCouponById(ArgumentMatchers.anyLong()))
+            .thenReturn(userCoupon);
+        Mockito.when(userCouponOutputPort.update(ArgumentMatchers.any(UserCoupon.class)))
+            .then(invocation -> invocation.getArgument(0));
+
+        // When
+        UserCoupon actual = userCouponService.useUserCoupon(userCoupon.getId());
+        // Then
+        Assertions.assertAll(
+            () -> Assertions.assertNotNull(actual.getSpentAt())
+        );
+    }
 }

@@ -1,13 +1,16 @@
 package com.bkmarriott.coupon.persistence.adapter;
 
+import com.bkmarriott.coupon.domain.event.DomainEventEnvelop;
 import com.bkmarriott.coupon.infrastructure.persistence.adapter.CouponEventLogPersistenceAdapter;
 import com.bkmarriott.coupon.infrastructure.persistence.entity.CouponIssuanceEventLogEntity;
 import com.bkmarriott.coupon.infrastructure.persistence.repository.CouponIssuanceEventLogRepository;
 import com.bkmarriott.coupon.persistence.config.RepositoryTest;
+import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("[Infrastructure] [Integration] CouponEventLogPersistenceAdapter Test")
@@ -57,15 +60,17 @@ class CouponEventLogPersistenceAdapterTest {
     }
 
     @Test
-    @DisplayName("[성공] 로그 저장 테스트 - LogId로 데이터를 저장한 뒤 아이디를 반환")
-    void generateEventLog_successTest() {
+    @DisplayName("[성공] 로그 저장 테스트 - 로그 저장 후 식별자를 반환")
+    void saveLog_successTest() {
         // Given
-        String logId = "logEventUUID";
+        UUID eventId = UUID.randomUUID();
+        DomainEventEnvelop mockEnvelop = Mockito.mock(DomainEventEnvelop.class);
+        Mockito.when(mockEnvelop.getEventId()).thenReturn(eventId);
         // When
-        String actual = couponEventLogAdapter.generateCouponLog(logId);
+        String actual = couponEventLogAdapter.saveLog(mockEnvelop);
         // Then
         Assertions.assertAll(
-            () -> Assertions.assertEquals(logId, actual)
+            () -> Assertions.assertEquals(String.valueOf(eventId), actual)
         );
     }
 }
