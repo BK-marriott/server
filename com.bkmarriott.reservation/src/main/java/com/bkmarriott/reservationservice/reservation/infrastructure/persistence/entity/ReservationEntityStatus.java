@@ -7,6 +7,10 @@ public enum ReservationEntityStatus {
 
   PENDING, PAID, REFUNDED, CANCELLED, REJECTED;
 
+  public static ReservationEntityStatus fromDomain(ReservationStatus status) {
+    return ReservationEntityStatus.valueOf(status.name());
+  }
+
   public ReservationStatus toDomain() {
     for(ReservationStatus status : ReservationStatus.values()) {
       if(Objects.equals(status.name(), this.name())) {

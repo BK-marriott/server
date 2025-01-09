@@ -1,6 +1,9 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity;
 
 import com.bkmarriott.reservationservice.reservation.domain.Reservation;
+import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationForCreate;
+import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationStatus;
+import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,6 +49,17 @@ public class ReservationEntity extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private ReservationEntityStatus status;
 
+  public ReservationEntity(Long id, Long guestId, Long hotelId, Long roomId, LocalDate startDate, LocalDate endDate, RoomType roomType, ReservationStatus status) {
+    this.id = id;
+    this.userId = guestId;
+    this.hotelId = hotelId;
+    this.roomId = roomId;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.roomType = RoomEntityType.fromDomain(roomType);
+    this.status = ReservationEntityStatus.fromDomain(status);
+  }
+
   public Reservation toDomain() {
     return new Reservation(
         id,
@@ -57,5 +71,28 @@ public class ReservationEntity extends BaseEntity {
         status.toDomain());
   }
 
+  public static ReservationEntity fromDomain(Reservation reservation) {
+    return new ReservationEntity(
+        reservation.getReservationId(),
+        reservation.getUserId(),
+        reservation.getHotelId(),
+        null,
+        reservation.getStartDate(),
+        reservation.getEndDate(),
+        reservation.getRoomType(),
+        reservation.getStatus());
+  }
 
+  public static ReservationEntity from(ReservationForCreate reservationForCreate) {
+    return new ReservationEntity(
+            null,
+            reservationForCreate.getGuestId(),
+            reservationForCreate.getHotelId(),
+            null,
+            reservationForCreate.getStartDate(),
+            reservationForCreate.getEndDate(),
+            reservationForCreate.getRoomType(),
+            ReservationStatus.PENDING
+    );
+  }
 }
