@@ -44,8 +44,8 @@ jobs:
       - name: Build with Gradle
         run: |
           cd ${{ matrix.service.folder }}
-          ./gradlew :${{ matrix.service.name }}:clean 
-          :${{ matrix.service.name }}:build -x test --no-daemon
+          ./gradlew clean 
+          ./gradlew build -x test --no-daemon
 
 
       - name: Build Docker Image
