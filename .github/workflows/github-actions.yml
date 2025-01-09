@@ -11,20 +11,27 @@ jobs:
     strategy:
       matrix:
         service:
-#          - name: "auth"
-#            folder: "com.bkmarriott.auth"
-#          - name: "charge"
-#            folder: "com.bkmarriott.charge"
-          - name: "coupon"
-            folder: "com.bkmarriott.coupon"
           - name: "eureka"
             folder: "com.bkmarriott.eureka"
+            yml: "EUREKA_SERVER_APPLICATION_DEV_YML"
+          - name: "auth"
+            folder: "com.bkmarriott.auth"
+            yml: "AUTH_APPLICATION_DEV_YML"
+          - name: "charge"
+            folder: "com.bkmarriott.charge"
+            yml: "CHARGE_APPLICATION_DEV_YML"
+          - name: "coupon"
+            folder: "com.bkmarriott.coupon"
+            yml: "COUPON_APPLICATION_DEV_YML"
           - name: "gateway"
             folder: "com.bkmarriott.gateway"
-#          - name: "hotel"
-#            folder: "com.bkmarriott.hotel"
-#          - name: "promotion"
-#            folder: "com.bkmarriott.promotion"
+            yml: "GATEWAY_APPLICATION_DEV_YML"
+          - name: "hotel"
+            folder: "com.bkmarriott.hotel"
+            yml: "HOTEL_APPLICATION_DEV_YML"
+          - name: "promotion"
+            folder: "com.bkmarriott.promotion"
+            yml: "PROMOTION_APPLICATION_DEV_YML"
 #          - name: "reservation"
 #            folder: "com.bkmarriott.reservation"
     steps:
@@ -39,7 +46,7 @@ jobs:
 
       - name: Inject application.yml
         run: |
-          echo "${{ secrets.APPLICATION_PROD_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          echo "${{ secrets.${{ matrix.service.yml }} }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
 
       - name: Build with Gradle
         run: |
