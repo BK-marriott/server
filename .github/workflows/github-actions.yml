@@ -17,7 +17,7 @@ jobs:
 #            folder: "com.bkmarriott.charge"
           - name: "coupon"
             folder: "com.bkmarriott.coupon"
-          - name: "eureka-server"
+          - name: "eureka"
             folder: "com.bkmarriott.eureka"
           - name: "gateway"
             folder: "com.bkmarriott.gateway"
@@ -50,7 +50,7 @@ jobs:
       - name: Build Docker Image
         run: |
           cd ${{ matrix.service.folder }}
-          docker build -t bkmarriott:${{ matrix.service.name }} .
+          docker buildx build -t bkmarriott:${{ matrix.service.name }} .
 
       - name: Push Docker Image
         env:
