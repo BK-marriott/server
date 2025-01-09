@@ -2,17 +2,16 @@ package com.bkmarriott.reservationservice.reservation.infrastructure.persistence
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.dto.InventoryQuery;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomEntityType;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryEntity;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryId;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryQueryDslRepository;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryRepository;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.config.RepositoryTest;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ class InventoryQueryAdaptorTest {
   @Autowired
   private InventoryRepository inventoryRepository;
   @Autowired
-  private InventoryQueryDslRepository inventoryQueryDslRepository;
+  private InventoryQueryAdaptor inventoryQueryAdaptor;
 
 
   @Test
@@ -57,14 +56,14 @@ class InventoryQueryAdaptorTest {
 
     InventoryQueryRequestDto requestDto = new InventoryQueryRequestDto(hotelId, startDate, endDate);
 
-    List<InventoryQuery> mockResponse = List.of(
-        new InventoryQuery(RoomEntityType.DELUXE, 2),
-        new InventoryQuery(RoomEntityType.STANDARD, 44),
-        new InventoryQuery(RoomEntityType.TWIN, 33)
+    List<InventoryQuantity> mockResponse = List.of(
+        new InventoryQuantity(RoomType.DELUXE, 2),
+        new InventoryQuantity(RoomType.STANDARD, 44),
+        new InventoryQuantity(RoomType.TWIN, 33)
     );
 
     // When
-    List<InventoryQuery> actual = inventoryQueryDslRepository.findAvailableRoomsByHotelIdAndDateRange(
+    List<InventoryQuantity> actual = inventoryQueryAdaptor.findAllInventoryQuantityByHotelIdAndDateRange(
         requestDto);
 
     // Then

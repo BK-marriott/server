@@ -3,7 +3,7 @@ package com.bkmarriott.reservationservice.reservation.application.service;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.application.exception.InventoryUpdateFailureException;
 import com.bkmarriott.reservationservice.reservation.application.exception.ResourceNotFoundException;
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryCommandOutputPort;
@@ -149,16 +149,16 @@ class InventoryServiceTest {
 
     InventoryQueryRequestDto requestDto = new InventoryQueryRequestDto(hotelId, startDate, endDate);
 
-    List<InventoryQueryResponseDto> mockResponse = List.of(
-        new InventoryQueryResponseDto(RoomType.DELUXE, 2),
-        new InventoryQueryResponseDto(RoomType.STANDARD, 44),
-        new InventoryQueryResponseDto(RoomType.TWIN, 33)
+    List<InventoryQuantity> mockResponse = List.of(
+        new InventoryQuantity(RoomType.DELUXE, 2),
+        new InventoryQuantity(RoomType.STANDARD, 44),
+        new InventoryQuantity(RoomType.TWIN, 33)
     );
-    Mockito.when(inventoryQueryOutputPort.findAvailableRoomsByHotelIdAndDateRange(requestDto)
+    Mockito.when(inventoryQueryOutputPort.findAllInventoryQuantityByHotelIdAndDateRange(requestDto)
         ).thenReturn(mockResponse);
 
     // When
-    List<InventoryQueryResponseDto> actual = inventoryQueryOutputPort.findAvailableRoomsByHotelIdAndDateRange(
+    List<InventoryQuantity> actual = inventoryQueryOutputPort.findAllInventoryQuantityByHotelIdAndDateRange(
         requestDto);
 
     // Then
@@ -176,7 +176,7 @@ class InventoryServiceTest {
     LocalDate endDate = LocalDate.of(2025, 2, 2);
 
     Mockito.when(
-            inventoryQueryOutputPort.findAvailableRoomsByHotelIdAndDateRange(
+            inventoryQueryOutputPort.findAllInventoryQuantityByHotelIdAndDateRange(
                     ArgumentMatchers.any(InventoryQueryRequestDto.class)))
         .thenReturn(null);
 

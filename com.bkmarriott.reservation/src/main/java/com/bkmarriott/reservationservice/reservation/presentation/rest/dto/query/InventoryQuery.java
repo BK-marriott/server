@@ -1,6 +1,6 @@
 package com.bkmarriott.reservationservice.reservation.presentation.rest.dto.query;
 
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import java.time.LocalDate;
 import lombok.Builder;
@@ -42,7 +42,7 @@ public class InventoryQuery {
     }
 
     public static Response from(
-        InventoryQueryResponseDto responseDto) {
+        InventoryQuantity responseDto) {
       return new Response(responseDto.getRoomType(), responseDto.getQuantity());
     }
   }

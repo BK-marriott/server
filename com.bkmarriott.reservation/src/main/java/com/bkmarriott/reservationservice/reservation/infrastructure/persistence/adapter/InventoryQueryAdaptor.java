@@ -1,11 +1,10 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.adapter;
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.dto.InventoryQuery;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryEntity;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomTypeInventoryId;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryQueryDslRepository;
@@ -33,10 +32,12 @@ public class InventoryQueryAdaptor implements InventoryQueryOutputPort {
   }
 
   @Override
-  public List<InventoryQueryResponseDto> findAvailableRoomsByHotelIdAndDateRange(
+  public List<InventoryQuantity> findAllInventoryQuantityByHotelIdAndDateRange(
       InventoryQueryRequestDto inventoryQueryRequestDto) {
-    return inventoryQueryDslRepository.findAvailableRoomsByHotelIdAndDateRange(inventoryQueryRequestDto)
-            .stream().map(InventoryQuery::toDto).toList();
+    return inventoryQueryDslRepository.findAllInventoryByHotelIdAndDateRange(inventoryQueryRequestDto)
+            .stream()
+            .map(RoomTypeInventoryEntity::toDomain)
+            .map(inventory -> new InventoryQuantity(inventory.getRoomType(), inventory.getAvailableQuantity()))
+            .toList();
   }
-
 }

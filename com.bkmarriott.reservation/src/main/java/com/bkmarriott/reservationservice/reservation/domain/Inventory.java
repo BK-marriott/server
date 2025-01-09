@@ -46,4 +46,8 @@ public class Inventory {
 
     return startDate.datesUntil(endDate).toList(); // endDate 제외
   }
+
+  public int getAvailableQuantity() {
+    return this.totalInventory - this.totalReserved;
+  }
 }

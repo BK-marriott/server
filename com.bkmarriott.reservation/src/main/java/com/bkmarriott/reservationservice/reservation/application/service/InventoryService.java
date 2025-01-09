@@ -1,7 +1,7 @@
 package com.bkmarriott.reservationservice.reservation.application.service;
 
 import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryRequestDto;
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.application.exception.InventoryUpdateFailureException;
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryCommandOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryQueryOutputPort;
@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -65,16 +66,17 @@ public class InventoryService {
 
   }
 
-  public List<InventoryQueryResponseDto> getInventoryQuantity(Long hotelId, LocalDate startDate, LocalDate endDate) {
+  @Transactional
+  public List<InventoryQuantity> getInventoryQuantity(Long hotelId, LocalDate startDate, LocalDate endDate) {
 
-    List<InventoryQueryResponseDto> availableRooms = inventoryQueryOutputPort
-        .findAvailableRoomsByHotelIdAndDateRange(new InventoryQueryRequestDto(
-            hotelId,startDate,endDate
-        ));
+    List<InventoryQuantity> availableRooms = inventoryQueryOutputPort
+            .findAllInventoryQuantityByHotelIdAndDateRange(new InventoryQueryRequestDto(
+                    hotelId, startDate, endDate
+            ));
 
     if (availableRooms == null || availableRooms.isEmpty()) {
       log.warn("[InventoryService] [find Available Rooms] hotelId: {}, startDate: {}, endDate: {}",
-          hotelId, startDate, endDate);
+              hotelId, startDate, endDate);
       throw new IllegalArgumentException("예약 가능 객실 수량 조회 결과가 없습니다.");
     }
 

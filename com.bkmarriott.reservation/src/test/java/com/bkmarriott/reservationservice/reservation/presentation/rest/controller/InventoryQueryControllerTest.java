@@ -2,7 +2,7 @@ package com.bkmarriott.reservationservice.reservation.presentation.rest.controll
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
+import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuantity;
 import com.bkmarriott.reservationservice.reservation.application.service.InventoryService;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import java.time.LocalDate;
@@ -39,10 +39,10 @@ class InventoryQueryControllerTest {
     String requestUrl = "/api/v1/reservations/inventories";
 
 
-    List<InventoryQueryResponseDto> mockResponse = List.of(
-        new InventoryQueryResponseDto(RoomType.DELUXE, 2),
-        new InventoryQueryResponseDto(RoomType.STANDARD, 44),
-        new InventoryQueryResponseDto(RoomType.TWIN, 33)
+    List<InventoryQuantity> mockResponse = List.of(
+        new InventoryQuantity(RoomType.DELUXE, 2),
+        new InventoryQuantity(RoomType.STANDARD, 44),
+        new InventoryQuantity(RoomType.TWIN, 33)
     );
     Mockito.when(inventoryService.getInventoryQuantity(
             ArgumentMatchers.anyLong(),
