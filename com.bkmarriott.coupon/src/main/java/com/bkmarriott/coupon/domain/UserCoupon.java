@@ -40,4 +40,8 @@ public class UserCoupon {
         this.spentAt = null;
         return this;
     }
+
+    public boolean isSpent() {
+        return this.spentAt != null;
+    }
 }

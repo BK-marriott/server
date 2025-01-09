@@ -4,6 +4,7 @@ import com.bkmarriott.coupon.application.outputport.UserCouponOutputPort;
 import com.bkmarriott.coupon.domain.Coupon;
 import com.bkmarriott.coupon.domain.UserCoupon;
 import com.bkmarriott.coupon.domain.vo.UserCouponForIssue;
+import com.bkmarriott.coupon.infrastructure.persistence.exception.CouponNotSpentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,11 @@ public class UserCouponService {
 
     public UserCoupon cancelUserCouponUsage(Long id) {
         UserCoupon userCoupon = userCouponOutputPort.findById(id);
-        userCoupon.deleteSpentAt();
+        if (!userCoupon.isSpent()) {
+            throw new CouponNotSpentException();
+        }
 
+        userCoupon.deleteSpentAt();
         return userCouponOutputPort.cancelUserCouponUsage(userCoupon);
     }
 }

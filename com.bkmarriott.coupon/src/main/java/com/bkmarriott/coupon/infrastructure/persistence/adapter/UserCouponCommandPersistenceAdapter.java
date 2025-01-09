@@ -75,16 +75,7 @@ public class UserCouponCommandPersistenceAdapter implements UserCouponOutputPort
         log.info("[UserCouponCommandPersistenceAdapter] [findById] couponId ::: {}", id);
 
         return userCouponRepository.findById(id)
-                .map(this::validateSpentAt)
                 .map(UserCouponEntity::toDomain)
                 .orElseThrow(UserCouponNotFoundException::new);
-    }
-
-    private UserCouponEntity validateSpentAt(UserCouponEntity userCouponEntity) {
-        if (userCouponEntity.getSpendingAt() == null) {
-            throw new CouponNotSpentException();
-        }
-
-        return userCouponEntity;
     }
 }
