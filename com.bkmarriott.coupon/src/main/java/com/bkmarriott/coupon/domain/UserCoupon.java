@@ -35,4 +35,9 @@ public class UserCoupon {
         this.spentAt = LocalDateTime.now();
         return this;
     }
+
+    public UserCoupon updateSpentAt() {
+        this.spentAt = LocalDateTime.now();
+        return this;
+    }
 }
