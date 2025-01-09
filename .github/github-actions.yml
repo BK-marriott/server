@@ -1,0 +1,103 @@
+name: CI/CD with github actions & docker
+
+on:
+  push:
+    branches: [ "ci-cd/#38-pipeline-implementation" ]
+
+jobs:
+  detect-changes:
+    name: Detect Changed Services
+    runs-on: ubuntu-latest
+    outputs:
+      services: ${{ steps.get_changed_services.outputs.services }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # 변경 사항 감지를 위해 충분한 커밋 히스토리 필요
+
+      - name: Set up Git
+        run: |
+          git fetch origin ${{ github.event.before }} --depth=1
+
+      - name: Get list of changed directories
+        id: get_changed_services
+        run: |
+          # 변경된 파일 목록을 가져와서 상위 디렉토리(서비스명)를 추출
+          CHANGED_DIRS=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | awk -F/ '{print $1 "/" $2}' | sort | uniq)
+          
+          echo "Changed directories: $CHANGED_DIRS"
+          
+          # 서비스 목록 정의
+          SERVICES=(
+            "com.bkmarriott.auth"
+            "com.bkmarriott.charge"
+            "com.bkmarriott.coupon"
+            "com.bkmarriott.eureka"
+            "com.bkmarriott.gateway"
+            "com.bkmarriott.hotel"
+            "com.bkmarriott.promotion"
+            "com.bkmarriott.reservation"
+          )
+          
+          # 변경된 서비스 필터링
+          CHANGED_SERVICES=()
+          for SERVICE in "${SERVICES[@]}"; do
+            for DIR in $CHANGED_DIRS; do
+              if [[ "$DIR" == "$SERVICE/"* ]]; then
+                CHANGED_SERVICES+=("$SERVICE")
+                break
+              fi
+            done
+          done
+          
+          # 결과 출력 (JSON 배열 형식)
+          SERVICES_JSON=$(printf '%s\n' "${CHANGED_SERVICES[@]}" | jq -R . | jq -s .)
+          echo "::set-output name=services::$SERVICES_JSON"
+#  build-and-deploy:
+#    name: Build
+#    needs: detect-changes
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        service: ${{ fromJson(needs.detect-changes.outputs.services) }}
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#
+#      - name: Inject application.yml
+#        run: |
+#          echo "${{ secrets.APPLICATION_PROD_YML }}" > ${{ matrix.service }}/src/main/resources/application.yml
+#        env:
+#          APPLICATION_YML: ${{ secrets.APPLICATION_YML }}
+#
+#      - name: Build with Gradle
+#        run: ./gradlew :${{ matrix.service }}:clean :${{ matrix.service }}:build -x test --no-daemon
+#
+#      - name: Build Docker Image
+#        run: |
+#          cd ${{ matrix.service }}
+#          docker build -t my-app:${{ matrix.service }} .
+#
+#      - name: Push Docker Image
+#        env:
+#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+#        run: |
+#          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#          docker push my-app:${{ matrix.service }}
+#
+#      - name: Deploy to AWS
+#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#        with:
+#          # 필요한 AWS 설정 및 파라미터 추가
+#          task-definition: ecs-task-def.json
+#          service: my-service-${{ matrix.service }}
+#          cluster: my-cluster
+#          wait-for-service-stability: true
