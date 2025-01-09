@@ -11,22 +11,22 @@ jobs:
     strategy:
       matrix:
         service:
-          - name: "auth"
-            folder: "com.bkmarriott.auth"
-          - name: "charge"
-            folder: "com.bkmarriott.charge"
+#          - name: "auth"
+#            folder: "com.bkmarriott.auth"
+#          - name: "charge"
+#            folder: "com.bkmarriott.charge"
           - name: "coupon"
             folder: "com.bkmarriott.coupon"
           - name: "eureka-server"
             folder: "com.bkmarriott.eureka"
           - name: "gateway"
             folder: "com.bkmarriott.gateway"
-          - name: "hotel"
-            folder: "com.bkmarriott.hotel"
-          - name: "promotion"
-            folder: "com.bkmarriott.promotion"
-          - name: "reservation"
-            folder: "com.bkmarriott.reservation"
+#          - name: "hotel"
+#            folder: "com.bkmarriott.hotel"
+#          - name: "promotion"
+#            folder: "com.bkmarriott.promotion"
+#          - name: "reservation"
+#            folder: "com.bkmarriott.reservation"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +46,6 @@ jobs:
           cd ${{ matrix.service.folder }}
           ./gradlew clean 
           ./gradlew build -x test --no-daemon
-
 
       - name: Build Docker Image
         run: |
