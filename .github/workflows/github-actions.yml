@@ -96,6 +96,6 @@ jobs:
             set -x
             echo "Using Docker image: $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
-            docker run -d --name ${{ matrix.service.name }} -p 8080:8080 $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+            sudo docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+            sudo docker run -d --name ${{ matrix.service.name }} -p 8080:8080 $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
           EOF
