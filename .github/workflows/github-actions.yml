@@ -57,7 +57,6 @@ jobs:
           elif [ "${{ matrix.service.name }}" == "reservation" ]; then
             echo "${{ secrets.RESERVATION_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
           fi
-          cat ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
 
       - name: Build with Gradle
         run: |
@@ -129,4 +128,5 @@ jobs:
             sudo docker rm ${{ matrix.service.name }}
             sudo docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
             sudo docker run -d --name ${{ matrix.service.name }} -p $SERVICE_PORT:$SERVICE_PORT $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+            sudo docker image prune -f
           EOF
