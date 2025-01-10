@@ -121,7 +121,10 @@ jobs:
           
           # SSH into EC2 and debug Docker variables
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@$EC2_INSTANCE_IP << EOF
-            set -x
+            if docker ps -a --format '{{.Names}}' | grep -Eq "^${{ matrix.service.name }}$"; then
+              docker stop ${{ matrix.service.name }}
+              docker rm ${{ matrix.service.name }}
+            fi
             echo "Using Docker image: $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             sudo docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
