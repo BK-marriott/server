@@ -13,28 +13,20 @@ jobs:
         service:
           - name: "eureka"
             folder: "com.bkmarriott.eureka"
-            port: ${{ secrets.EUREKA_PORT }}
           - name: "gateway"
             folder: "com.bkmarriott.gateway"
-            port: ${{ secrets.GATEWAY_PORT }}
           - name: "auth"
             folder: "com.bkmarriott.auth"
-            port: ${{ secrets.AUTH_PORT }}
           - name: "coupon"
             folder: "com.bkmarriott.coupon"
-            port: ${{ secrets.COUPON_PORT }}
           - name: "charge"
             folder: "com.bkmarriott.charge"
-            port: ${{ secrets.CHARGE_PORT }}
           - name: "promotion"
             folder: "com.bkmarriott.promotion"
-            port: ${{ secrets.PROMOTION_PORT }}
           - name: "hotel"
             folder: "com.bkmarriott.hotel"
-            port: ${{ secrets.HOTEL_PORT }}
           - name: "reservation"
             folder: "com.bkmarriott.reservation"
-            port: ${{ secrets.RESERVATION_PORT }}
 
     steps:
       - name: Checkout
@@ -100,11 +92,38 @@ jobs:
           echo "$EC2_SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
           
+          case ${{ matrix.service.name }} in
+            "eureka")
+              SERVICE_PORT=${{ secrets.EUREKA_PORT }}
+            ;;
+            "gateway")
+              SERVICE_PORT=${{ secrets.GATEWAY_PORT }}
+            ;;
+            "auth")
+              SERVICE_PORT=${{ secrets.AUTH_PORT }}
+            ;;
+            "coupon")
+              SERVICE_PORT=${{ secrets.COUPON_PORT }}
+            ;;
+            "charge")
+              SERVICE_PORT=${{ secrets.CHARGE_PORT }}
+            ;;
+            "promotion")
+              SERVICE_PORT=${{ secrets.PROMOTION_PORT }}
+            ;;
+            "hotel")
+              SERVICE_PORT=${{ secrets.HOTEL_PORT }}
+            ;;
+            "reservation")
+              SERVICE_PORT=${{ secrets.RESERVATION_PORT }}
+            ;;
+          esac
+          
           # SSH into EC2 and debug Docker variables
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@$EC2_INSTANCE_IP << EOF
             set -x
             echo "Using Docker image: $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             sudo docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
-            sudo docker run -d --name ${{ matrix.service.name }} -p ${{ matrix.service.port }}:${{ matrix.service.port }} $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+            sudo docker run -d --name ${{ matrix.service.name }} -p $SERVICE_PORT:$SERVICE_PORT $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
           EOF
