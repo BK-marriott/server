@@ -61,6 +61,7 @@ jobs:
       - name: Build with Gradle
         run: |
           cd ${{ matrix.service.folder }}
+          chmod +x gradlew
           ./gradlew clean 
           ./gradlew build -x test --no-daemon
 
