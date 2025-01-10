@@ -57,6 +57,7 @@ jobs:
           elif [ "${{ matrix.service.name }}" == "reservation" ]; then
             echo "${{ secrets.RESERVATION_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
           fi
+          cat ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
 
       - name: Build with Gradle
         run: |
