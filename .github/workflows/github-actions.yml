@@ -128,5 +128,4 @@ jobs:
             sudo docker rm ${{ matrix.service.name }}
             sudo docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
             sudo docker run -d --name ${{ matrix.service.name }} -p $SERVICE_PORT:$SERVICE_PORT $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
-            sudo docker image prune -f
           EOF
