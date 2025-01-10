@@ -91,6 +91,5 @@ jobs:
           
           # SSH into EC2 and run Docker commands
           ssh -i private_key.pem -o StrictHostKeyChecking=no -t ubuntu@$EC2_INSTANCE_IP
-          echo '$DOCKER_PASSWORD' | docker login -u '$DOCKER_USERNAME' --password-stdin
           docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
           docker run -d --name ${{ matrix.service.name }} -p 8080:8080 $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
