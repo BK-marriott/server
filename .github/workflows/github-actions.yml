@@ -13,20 +13,29 @@ jobs:
         service:
           - name: "eureka"
             folder: "com.bkmarriott.eureka"
-          - name: "auth"
-            folder: "com.bkmarriott.auth"
-          - name: "charge"
-            folder: "com.bkmarriott.charge"
-          - name: "coupon"
-            folder: "com.bkmarriott.coupon"
+            port: ${{ secrets.EUREKA_PORT }}
           - name: "gateway"
             folder: "com.bkmarriott.gateway"
-          - name: "hotel"
-            folder: "com.bkmarriott.hotel"
+            port: ${{ secrets.GATEWAY_PORT }}
+          - name: "auth"
+            folder: "com.bkmarriott.auth"
+            port: ${{ secrets.AUTH_PORT }}
+          - name: "coupon"
+            folder: "com.bkmarriott.coupon"
+            port: ${{ secrets.COUPON_PORT }}
+          - name: "charge"
+            folder: "com.bkmarriott.charge"
+            port: ${{ secrets.CHARGE_PORT }}
           - name: "promotion"
             folder: "com.bkmarriott.promotion"
-#          - name: "reservation"
-#            folder: "com.bkmarriott.reservation"
+            port: ${{ secrets.PROMOTION_PORT }}
+          - name: "hotel"
+            folder: "com.bkmarriott.hotel"
+            port: ${{ secrets.HOTEL_PORT }}
+          - name: "reservation"
+            folder: "com.bkmarriott.reservation"
+            port: ${{ secrets.RESERVATION_PORT }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,8 +47,6 @@ jobs:
           distribution: 'temurin'
 
       - name: Inject application.yml
-        env:
-          DYNAMIC_YML_SECRET: ${{ secrets['${{ matrix.service.yml }}'] }}
         run: |
           if [ "${{ matrix.service.name }}" == "eureka" ]; then
             echo "${{ secrets.EUREKA_SERVER_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
@@ -55,6 +62,8 @@ jobs:
             echo "${{ secrets.HOTEL_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
           elif [ "${{ matrix.service.name }}" == "promotion" ]; then
             echo "${{ secrets.PROMOTION_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
+          elif [ "${{ matrix.service.name }}" == "reservation" ]; then
+            echo "${{ secrets.RESERVATION_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
           fi
 
       - name: Build with Gradle
@@ -97,5 +106,5 @@ jobs:
             echo "Using Docker image: $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             sudo docker pull $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
-            sudo docker run -d --name ${{ matrix.service.name }} -p 8080:8080 $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
+            sudo docker run -d --name ${{ matrix.service.name }} -p ${{ matrix.service.port }}:${{ matrix.service.port }} $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
           EOF
