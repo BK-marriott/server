@@ -30,7 +30,7 @@ public class RoomChargeService {
 
     @Transactional
     public RoomCharge create(RoomChargeForCreate roomChargeForCreate) {
-        log.debug("[RoomChargeService] [create] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.id().hotelId(), roomChargeForCreate.id().roomType());
+        log.info("[RoomChargeService] [create] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.id().hotelId(), roomChargeForCreate.id().roomType());
 
         roomChargeOutputPort.findById(roomChargeForCreate.id()).ifPresent(roomCharge -> {
             throw new RoomChargeDuplicatedException();
@@ -40,7 +40,7 @@ public class RoomChargeService {
     }
 
     public RoomCharge findOne(RoomChargeId roomChargeId) {
-        log.debug("[RoomChargeService] [findOne] hotelId ::: {}, roomType ::: {}", roomChargeId.hotelId(), roomChargeId.roomType());
+        log.info("[RoomChargeService] [findOne] hotelId ::: {}, roomType ::: {}", roomChargeId.hotelId(), roomChargeId.roomType());
 
         return roomChargeOutputPort.findById(roomChargeId)
                 .orElseThrow(RoomChargeNotFoundException::new);
@@ -48,7 +48,7 @@ public class RoomChargeService {
 
     @Transactional
     public RoomCharge update(RoomChargeForCreate roomChargeForCreate) {
-        log.debug("[RoomChargeService] [update] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.id().hotelId(), roomChargeForCreate.id().roomType());
+        log.info("[RoomChargeService] [update] hotelId ::: {}, roomType ::: {}", roomChargeForCreate.id().hotelId(), roomChargeForCreate.id().roomType());
 
         RoomCharge roomCharge = roomChargeOutputPort.findById(roomChargeForCreate.id())
                 .orElseThrow(RoomChargeNotFoundException::new);
@@ -59,10 +59,12 @@ public class RoomChargeService {
     @Transactional
     @Scheduled(cron = "0 0 4 * * *")
     public void createAllNextDefaultCharge() {
+        LocalDate date = LocalDate.now().plusMonths(3);
+
+        log.info("[RoomChargeService] [createAllNextDefaultCharge] date ::: {}", date);
+
         Map<RoomType, Integer> roomChargeMap = roomChargeOutputPort.findAllDefault().stream()
                 .collect(Collectors.toMap(DefaultRoomCharge::getRoomType, DefaultRoomCharge::getCharge));
-
-        LocalDate date = LocalDate.now().plusMonths(3);
 
         List<RoomChargeForCreate> roomChargeForCreateList = hotelTypeOutputPort.findAll().stream()
                 .map(hotelType -> RoomChargeForCreate.of(hotelType.getHotelId(), hotelType.getRoomType(), date, roomChargeMap.get(hotelType.getRoomType())))
