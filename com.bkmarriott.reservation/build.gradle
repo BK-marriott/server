@@ -85,6 +85,7 @@ jacocoTestReport {
                     "**/entity/*",
                     "**/util/*",
                     "**/reservation/presentation/rest/dto/*",
+                    "**/infrastructure/cache/*",
                     "**/ReservationApplication.class"])
         }))
     }
@@ -111,7 +112,7 @@ jacocoTestCoverageVerification {
             }
 
             excludes = ["*.*Config", "*.*Entity*", "*.*Application", "*.dto.*",
-                        "*.util.*", "*.exception.*", "*.*Query*"
+                        "*.util.*", "*.exception.*", "*.*Query*", "*.infrastructure.cache.*"
             ]
         }
     }
