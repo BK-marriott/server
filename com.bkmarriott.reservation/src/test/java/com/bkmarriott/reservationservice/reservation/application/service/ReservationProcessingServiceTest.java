@@ -127,7 +127,7 @@ public class ReservationProcessingServiceTest {
         // Given
         Payment mockPayment = new Payment(1L, 1L,190000L, 171000L,"paymentType", "transactionalId", 1L);
 
-        Mockito.when(paymentOutputPort.processPayment(paymentForCreate, reservation.getReservationId())).thenReturn(mockPayment);
+        Mockito.when(paymentOutputPort.processPayment(paymentForCreate, reservation)).thenReturn(mockPayment);
 
         // When
         Payment result = reservationProcessingService.processPayment(reservation, paymentForCreate);
@@ -143,8 +143,6 @@ public class ReservationProcessingServiceTest {
     @DisplayName("[실패] 결제 테스트 - 결제 처리 중 FeignClient 오류 발생시 ReservationProcessingException 예외를 발생한다.")
     void processPayment_FailureTest(){
         // Given
-        Long reservationId = 1L;
-
         Mockito.when(reservationProcessingService.processPayment(reservation, paymentForCreate)).thenThrow(FeignException.class);
 
         // When & Then
@@ -194,7 +192,7 @@ public class ReservationProcessingServiceTest {
                         .hasMessage("예약 확정 중 오류가 발생했습니다.")
         );
 
-        Mockito.verify(paymentOutputPort).processRefund(mockPayment.paymentId());
+        Mockito.verify(paymentOutputPort).processRefund(mockPayment.paymentId(), reservation);
         Mockito.verify(reservationCommandOutputPort).updateReservationStatus(reservationId, ReservationStatus.REFUNDED);
         Mockito.verify(inventoryCacheOutputPort, Mockito.times(1)).rollbackCount(InventoryQuery.fromReservation(reservation));
     }
