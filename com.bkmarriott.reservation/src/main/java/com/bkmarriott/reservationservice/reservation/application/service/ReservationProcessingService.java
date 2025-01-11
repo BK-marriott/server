@@ -44,7 +44,7 @@ public class ReservationProcessingService {
         log.info("[ReservationProcessingService] [processPayment] reservationId ::: {}", reservation.getReservationId());
         try {
             // 1. Payment 서비스 호출
-            return paymentOutputPort.processPayment(paymentForCreate, reservation.getReservationId()); // FeignClient
+            return paymentOutputPort.processPayment(paymentForCreate, reservation); // FeignClient
         } catch (Exception e){
             log.error("[ReservationProcessingService] [processPayment] Error occurred {}: {}", reservation.getReservationId(), e.getMessage());
             // 상태 수정
@@ -68,7 +68,7 @@ public class ReservationProcessingService {
             // Redis Count 수정
             inventoryCacheOutputPort.rollbackCount(InventoryQuery.fromReservation(reservation));
             // 환불 처리
-            paymentOutputPort.processRefund(payment.paymentId());
+            paymentOutputPort.processRefund(payment.paymentId(), reservation);
             // 상태 변경
             reservationCommandOutputPort.updateReservationStatus(reservation.getReservationId(), ReservationStatus.REFUNDED);
             throw new ReservationProcessingException("예약 확정 중 오류가 발생했습니다.");
