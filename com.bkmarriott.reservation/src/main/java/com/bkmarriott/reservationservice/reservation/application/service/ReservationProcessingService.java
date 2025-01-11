@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,8 +29,7 @@ public class ReservationProcessingService {
         log.debug("[ReservationProcessingService] [prepareReservation]");
         try {
             // 1. 쿠폰 유효성 검증
-            couponOutputPort.verifyCoupon(reservationForCreate.paymentForCreate().appliedCoupon()); // FeignClient
-
+            Optional.ofNullable(reservationForCreate.paymentForCreate().appliedCoupon()).ifPresent(couponOutputPort::verifyCoupon);
             // 2. 예약 정보 DB 저장 및 예약 번호 반환 (PENDING)
             return reservationCommandOutputPort.createReservation(reservationForCreate);
 
@@ -62,7 +63,8 @@ public class ReservationProcessingService {
             inventoryService.updateTotalReserved(reservation.getReservationId());
 
             // 2. 쿠폰 사용 처리
-            couponOutputPort.useCoupon(payment.appliedCoupon()); // FeignClient
+            Optional.ofNullable(payment.appliedCoupon()).ifPresent(couponOutputPort::useCoupon);
+
         }catch (Exception e){
             log.error("[ReservationProcessingService] [confirmReservation] Error occurred {}: {}", reservation.getReservationId(), e.getMessage());
             // Redis Count 수정
