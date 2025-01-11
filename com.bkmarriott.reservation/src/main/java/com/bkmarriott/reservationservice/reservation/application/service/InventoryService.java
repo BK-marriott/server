@@ -87,6 +87,7 @@ public class InventoryService {
   }
 
   public void prepareAvailableRoom(InventoryQuery query) {
+    log.info("[InventoryService] [prepareAvailableRoom] hotelId ::: {}, startDate ::: {}, endDate ::: {}, roomType ::: {}", query.hotelId(), query.startDate(), query.endDate(), query.roomType() );
     List<Inventory> inventoryFromReservation = inventoryQueryOutputPort.findInventoryFromReservation(query);
     inventoryFromReservation.stream()
             .mapToInt(Inventory::getAvailableRoomCount)
