@@ -49,6 +49,7 @@ public class UserCouponServiceTest {
         return new UserCoupon(
                 userCouponId,
                 TEST_COUPON,
+                1L,
                 LocalDateTime.of(2025, 1, 4, 0, 0, 0),
                 spentAt,
                 LocalDateTime.of(2025, 1, 31, 0, 0, 0)
