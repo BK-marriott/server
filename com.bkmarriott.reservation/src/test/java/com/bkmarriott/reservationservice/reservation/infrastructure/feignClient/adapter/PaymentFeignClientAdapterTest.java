@@ -1,8 +1,7 @@
-package com.bkmarriott.reservationservice.reservation.infrastructure.adapter;
+package com.bkmarriott.reservationservice.reservation.infrastructure.feignClient.adapter;
 
 import com.bkmarriott.reservationservice.reservation.domain.vo.Payment;
 import com.bkmarriott.reservationservice.reservation.domain.vo.PaymentForCreate;
-import com.bkmarriott.reservationservice.reservation.infrastructure.feignClient.adapter.PaymentFeignClientAdapter;
 import com.bkmarriott.reservationservice.reservation.infrastructure.feignClient.client.PaymentClient;
 import com.bkmarriott.reservationservice.reservation.infrastructure.feignClient.dto.PaymentDto;
 import com.bkmarriott.reservationservice.reservation.infrastructure.feignClient.dto.PaymentRequestDto;
@@ -17,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Infrastructure] PaymentFeignClientAdapterTest Unit Test")
-public class PaymentForCreateFeignClientAdapterTest {
+public class PaymentFeignClientAdapterTest {
 
     @InjectMocks PaymentFeignClientAdapter paymentFeignClientAdapter;
     @Mock PaymentClient paymentClient;
