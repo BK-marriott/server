@@ -44,7 +44,7 @@ jobs:
           
           SERVICES_TO_BUILD=""
 
-          for SERVICE_FOLDER in $(echo "${{ toJSON(matrix.service) }}" | jq -r '.[] | .folder'); do
+          for SERVICE_FOLDER in $(echo "${{ toJSON(matrix.service) }}" | jq -r '.folder'); do
             if echo "$CHANGED_FILES" | grep -q "$SERVICE_FOLDER"; then
               SERVICES_TO_BUILD="$SERVICES_TO_BUILD $SERVICE_FOLDER"
             fi
