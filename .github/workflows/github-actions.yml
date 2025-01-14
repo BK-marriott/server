@@ -41,16 +41,19 @@ jobs:
         run: |
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           echo "Changed files: $CHANGED_FILES"
-          
+            
           SERVICES_TO_BUILD=""
 
-          for SERVICE_FOLDER in $(echo "${{ toJSON(matrix.service) }}" | jq -r '.folder'); do
-            if echo "$CHANGED_FILES" | grep -q "$SERVICE_FOLDER"; then
-              SERVICES_TO_BUILD="$SERVICES_TO_BUILD $SERVICE_FOLDER"
+          for CHANGED_FILE in $CHANGED_FILES; do
+            FOLDER=$(echo "$CHANGED_FILE" | sed 's/\/.*//')
+          
+            # 해당 폴더가 이미 SERVICES_TO_BUILD에 포함되지 않으면 추가
+            if [[ ! "$SERVICES_TO_BUILD" =~ "$FOLDER" ]]; then
+            SERVICES_TO_BUILD="$SERVICES_TO_BUILD $FOLDER"
             fi
           done
-
-          echo "Services to build: $SERVICES_TO_BUILD"
+          
+          echo "Folders to build: $SERVICES_TO_BUILD"
           echo "services_to_build=$SERVICES_TO_BUILD" >> $GITHUB_ENV
 
       - name: Skip Unchanged Services
