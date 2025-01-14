@@ -24,9 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Application] HotelService Unit Test")
-public class HotelServiceTest {
+public class HotelQueryServiceTest {
 
-    @InjectMocks private HotelService hotelService;
+    @InjectMocks private HotelQueryService hotelQueryService;
     @Mock private HotelQueryOutputPort hotelQueryOutputPort;
     @Mock private ChargeOutputPort chargeOutputPort;
 
@@ -45,7 +45,7 @@ public class HotelServiceTest {
         Mockito.when(chargeOutputPort.getRoomCharge(hotel, request.startDate())).thenReturn(expectedRoomCharge);
 
         // When
-        Page<HotelSearchResponseDto> result = hotelService.searchHotel(request, pageable);
+        Page<HotelSearchResponseDto> result = hotelQueryService.searchHotel(request, pageable);
 
         // Then
         assertNotNull(result);
