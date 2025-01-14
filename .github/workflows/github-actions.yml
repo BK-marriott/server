@@ -62,12 +62,14 @@ jobs:
           exit 0
 
       - name: Set up JDK 17
+        if: ${{ contains(env.services_to_build, matrix.service.folder) }}
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
       - name: Inject application.yml
+        if: ${{ contains(env.services_to_build, matrix.service.folder) }}
         run: |
           if [ "${{ matrix.service.name }}" == "eureka" ]; then
             echo "${{ secrets.EUREKA_SERVER_APPLICATION_DEV_YML }}" > ${{ matrix.service.folder }}/src/main/resources/application-dev.yml
@@ -90,6 +92,7 @@ jobs:
           fi
 
       - name: Build with Gradle
+        if: ${{ contains(env.services_to_build, matrix.service.folder) }}
         run: |
           cd ${{ matrix.service.folder }}
           chmod +x gradlew
@@ -97,6 +100,7 @@ jobs:
           ./gradlew build -x test --no-daemon
 
       - name: Build Docker Image
+        if: ${{ contains(env.services_to_build, matrix.service.folder) }}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
@@ -104,6 +108,7 @@ jobs:
           docker buildx build -t $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest .
 
       - name: Push Docker Image
+        if: ${{ contains(env.services_to_build, matrix.service.folder) }}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -112,6 +117,7 @@ jobs:
           docker push $DOCKER_USERNAME/bkmarriott-${{ matrix.service.name }}:latest
 
       - name: Deploy Docker Image to EC2
+        if: ${{ contains(env.services_to_build, matrix.service.folder) }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
