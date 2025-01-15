@@ -4,12 +4,17 @@ import com.bkmarriott.hotel.application.dto.HotelSearchResponseDto;
 import com.bkmarriott.hotel.application.outputport.ChargeOutputPort;
 import com.bkmarriott.hotel.application.outputport.HotelQueryOutputPort;
 import com.bkmarriott.hotel.domain.Hotel;
+import com.bkmarriott.hotel.infrastructure.feignClient.dto.RoomChargeResponse;
 import com.bkmarriott.hotel.presentation.rest.dto.request.HotelSearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +28,25 @@ public class HotelQueryService {
 
         Page<Hotel> hotels = hotelQueryOutputPort.searchHotel(searchRequest, pageable);
 
+        if(!hotels.hasContent()){
+            return Page.empty(pageable);
+        }
+
+        List<Long> hotelIds = hotels.getContent().stream().map(Hotel::getHotelId).toList();
+
+        List<RoomChargeResponse> roomCharges = chargeOutputPort.getRoomCharge(hotelIds, searchRequest.startDate());
+
+        Map<Long, RoomChargeResponse> roomChargeMap = mapRoomChargesByHotelId(roomCharges);
+
         return hotels.map(hotel -> {
-            int roomCharge = chargeOutputPort.getRoomCharge(hotel, searchRequest.startDate());
-            return new HotelSearchResponseDto(hotel, roomCharge);
+           RoomChargeResponse roomChargeResponse = roomChargeMap.get(hotel.getHotelId());
+           Integer roomCharge = (roomChargeResponse != null) ? roomChargeResponse.charge() : null;
+           return new HotelSearchResponseDto(hotel, roomCharge);
         });
+    }
+
+    private Map<Long, RoomChargeResponse> mapRoomChargesByHotelId(List<RoomChargeResponse> roomCharges) {
+        return roomCharges.stream()
+                .collect(Collectors.toMap(RoomChargeResponse::hotelId, roomCharge -> roomCharge));
     }
 }
