@@ -36,10 +36,10 @@ public class HotelQueryService {
 
         List<RoomChargeResponse> roomCharges = chargeOutputPort.getRoomCharge(hotelIds, searchRequest.startDate());
 
-        Map<Long, RoomChargeResponse> roomChargeMap = mapRoomChargesByHotelId(roomCharges);
+        Map<Long, RoomChargeResponse> roomChargeResponseMap = mapRoomChargesByHotelId(roomCharges);
 
         return hotels.map(hotel -> {
-           RoomChargeResponse roomChargeResponse = roomChargeMap.get(hotel.getHotelId());
+           RoomChargeResponse roomChargeResponse = roomChargeResponseMap.get(hotel.getHotelId());
            Integer roomCharge = (roomChargeResponse != null) ? roomChargeResponse.charge() : null;
            return new HotelSearchResponseDto(hotel, roomCharge);
         });
