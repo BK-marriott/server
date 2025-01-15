@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 
-public interface CouponIssuanceOutboxRepository extends JpaRepository<CouponIssuanceOutboxEntity, Long> {
+public interface CouponIssuanceOutboxRepository extends JpaRepository<CouponIssuanceOutboxEntity, String> {
 
     @Modifying
     List<CouponIssuanceOutboxEntity> findAllByIsPublishedIsFalse();

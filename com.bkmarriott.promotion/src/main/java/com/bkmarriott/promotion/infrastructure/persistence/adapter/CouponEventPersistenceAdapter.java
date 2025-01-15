@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -24,29 +22,6 @@ public class CouponEventPersistenceAdapter implements
 
     private final CouponIssuanceOutboxRepository outboxRepository;
     private final EventConverter eventConverter;
-    private final ApplicationEventPublisher eventPublisher;
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public DomainEventEnvelop<CouponIssuanceEvent> record(CouponIssuanceEvent couponIssuanceEvent) {
-        log.debug(
-            "[CouponEventPersistenceAdapter] [issueCoupon] promotionId ::: {}, couponId ::: {}, userId ::: {}",
-            couponIssuanceEvent.getPromotionId(), couponIssuanceEvent.getCouponId(), couponIssuanceEvent.getUserId()
-        );
-        CouponIssuanceOutboxEntity outboxEntity = parseFromEvent(couponIssuanceEvent);
-        outboxEntity = outboxRepository.save(outboxEntity);
-
-        eventPublisher.publishEvent(outboxEntity);
-        return outboxEntity.toEnvelop(eventConverter);
-    }
-
-    private CouponIssuanceOutboxEntity parseFromEvent(CouponIssuanceEvent event) {
-        DomainEventEnvelop<CouponIssuanceEvent> envelop = DomainEventEnvelop.of(
-            event, "[promotion service] [CouponEventPersistenceAdapter] [issueCoupon]"
-        );
-        String eventJson = eventConverter.convertToJson(event);
-        return CouponIssuanceOutboxEntity.from(envelop, eventJson);
-    }
 
     @Override
     @Transactional
