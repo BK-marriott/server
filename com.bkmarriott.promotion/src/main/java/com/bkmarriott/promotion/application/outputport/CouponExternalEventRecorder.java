@@ -6,9 +6,6 @@ import java.util.UUID;
 
 public interface CouponExternalEventRecorder {
 
-
-    DomainEventEnvelop<CouponIssuanceEvent> record(CouponIssuanceEvent couponIssuanceEvent);
-
     DomainEventEnvelop<CouponIssuanceEvent> record(DomainEventEnvelop<CouponIssuanceEvent> envelop);
 
     void recordToPublished(UUID recordId);
