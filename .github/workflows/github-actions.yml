@@ -2,7 +2,7 @@ name: CI/CD with github actions & docker
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "main" ]
 
 jobs:
   build-and-deploy:
