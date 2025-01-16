@@ -73,7 +73,7 @@ public class ReservationProcessingService {
             // 환불 처리
             paymentOutputPort.processRefund(payment.paymentId(), reservation);
             // 상태 변경
-            reservationCommandOutputPort.updateReservationStatus(reservation.getReservationId(), ReservationStatus.REFUNDED);
+            reservationCommandOutputPort.updateReservationStatus(reservation.getReservationId(), ReservationStatus.ABORT);
             throw new ReservationProcessingException("예약 확정 중 오류가 발생했습니다.");
         }
     }
