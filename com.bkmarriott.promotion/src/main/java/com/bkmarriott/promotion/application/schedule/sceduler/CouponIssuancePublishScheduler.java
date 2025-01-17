@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CouponIssuancePublishScheduler {
 
     private static final long TIME_LIMIT_MINUTES_FOR_OLD = 20;
+    private static final long SCHEDULER_INTERVAL_MINUTES = 20;
 
     private final CouponExternalEventReader eventReader;
     private final CouponExternalEventRecorder eventRecorder;
@@ -30,7 +31,7 @@ public class CouponIssuancePublishScheduler {
      * 주기적으로 카프카에 발행하는 스케줄러
      * */
     @Transactional
-    @Scheduled(fixedRate = 20 * 60000)
+    @Scheduled(fixedRate = SCHEDULER_INTERVAL_MINUTES * 60000)
     public void scheduleCouponIssuanceEventPublish() {
         LocalDateTime scheduledAt = LocalDateTime.now();
         log.info("[CouponIssuancePublishScheduler] [scheduleCouponIssuancePublish] startedAt ::: {}", scheduledAt);
