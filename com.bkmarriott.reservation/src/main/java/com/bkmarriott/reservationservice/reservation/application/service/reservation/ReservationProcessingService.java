@@ -62,7 +62,7 @@ public class ReservationProcessingService {
         log.info("[ReservationProcessingService] [confirmReservation] reservationId ::: {}", reservation.getReservationId());
         try{
             // 1. Inventory 수정
-            inventoryService.updateTotalReservedInventory(reservation.getReservationId());
+//            inventoryService.updateTotalReservedInventory(reservation.getReservationId());
 
             // 2. 쿠폰 사용 처리
             Optional.ofNullable(payment.appliedCoupon()).ifPresent(couponOutputPort::useCoupon);
