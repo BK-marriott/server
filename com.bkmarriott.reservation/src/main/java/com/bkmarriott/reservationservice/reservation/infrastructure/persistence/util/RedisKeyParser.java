@@ -1,8 +1,6 @@
 package com.bkmarriott.reservationservice.reservation.infrastructure.persistence.util;
 
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.RoomEntityType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.time.LocalDate;
 
@@ -20,8 +18,6 @@ public class RedisKeyParser {
         return new ParsedKey(hotelId, date, roomType);
     }
 
-    @Getter
-        @AllArgsConstructor
         public record ParsedKey(Long hotelId, LocalDate date, RoomEntityType roomType) {
     }
 }
