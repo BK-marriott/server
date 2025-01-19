@@ -1,17 +1,21 @@
 package com.bkmarriott.reservationservice.reservation.domain.event;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoomInventoryEvent {
     EventType changeType;       // 객실 재고 변경 상황 (예: 객실 선점, 주문 취소 등)
     List<RoomStockInfo> inventoryInfoList;
 
 
     @Getter
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor
     public static class RoomStockInfo{
         Long sequenceNumber;     // Redis 요청 순서
