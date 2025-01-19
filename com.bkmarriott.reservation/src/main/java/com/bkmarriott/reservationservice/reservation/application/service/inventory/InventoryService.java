@@ -8,6 +8,7 @@ import com.bkmarriott.reservationservice.reservation.application.outputport.rese
 import com.bkmarriott.reservationservice.reservation.application.outputport.cache.InventoryCacheOutputPort;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
 import com.bkmarriott.reservationservice.reservation.domain.Reservation;
+import com.bkmarriott.reservationservice.reservation.domain.event.RoomInventoryEvent;
 import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuery;
 
 import java.util.List;
@@ -55,13 +56,8 @@ public class InventoryService {
 
   public void prepareAvailableRoom(InventoryQuery query) {
     log.info("[InventoryService] [prepareAvailableRoom] hotelId ::: {}, startDate ::: {}, endDate ::: {}, roomType ::: {}", query.hotelId(), query.startDate(), query.endDate(), query.roomType() );
-    List<Inventory> inventoryFromReservation = inventoryQueryOutputPort.findInventoryFromReservation(query);
-    inventoryFromReservation.stream()
-            .mapToInt(Inventory::getAvailableRoomCount)
-            .min()
-            .orElseThrow(() -> new ResourceNotFoundException("해당 예약정보에 해당하는 객실 정보를 찾을 수 없습니다."));
 
-    inventoryCacheOutputPort.decreaseRoomCount(query);
-    // TODO DB 객실 선점 성공 히스토리 저장
+    List<RoomInventoryEvent.RoomStockInfo> roomStockInfoList = inventoryCacheOutputPort.decreaseRoomCount(query);
+
   }
 }
