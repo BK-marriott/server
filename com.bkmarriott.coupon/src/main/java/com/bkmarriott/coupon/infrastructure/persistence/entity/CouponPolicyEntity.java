@@ -52,7 +52,6 @@ public class CouponPolicyEntity extends BaseEntity {
     }
 
     public CouponPolicy toDomain() {
-        System.out.println(type);
         return CouponPolicyFactory.generateCouponPolicy(
             type.toDomain(), id, afterDay, startedAt, endedAt
         );
