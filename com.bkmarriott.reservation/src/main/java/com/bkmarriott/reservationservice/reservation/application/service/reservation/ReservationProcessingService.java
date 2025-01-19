@@ -2,6 +2,7 @@ package com.bkmarriott.reservationservice.reservation.application.service.reserv
 
 import com.bkmarriott.reservationservice.reservation.application.exception.PaymentException;
 import com.bkmarriott.reservationservice.reservation.application.exception.ReservationProcessingException;
+import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryMessageSender;
 import com.bkmarriott.reservationservice.reservation.application.outputport.reservation.ReservationCommandOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.cache.InventoryCacheOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.feign.CouponOutputPort;
@@ -27,6 +28,7 @@ public class ReservationProcessingService {
     private final CouponOutputPort couponOutputPort;
     private final PaymentOutputPort paymentOutputPort;
     private final InventoryCacheOutputPort inventoryCacheOutputPort;
+    private final InventoryMessageSender inventoryMessageSender;
 
     public Reservation prepareReservation(ReservationForCreate reservationForCreate){
         log.debug("[ReservationProcessingService] [prepareReservation]");
@@ -76,6 +78,7 @@ public class ReservationProcessingService {
 
     private void rollbackReservation(Reservation reservation, ReservationStatus updatedStatus){
         List<RoomInventoryEvent.RoomStockInfo> roomStockInfoList = inventoryCacheOutputPort.rollbackCount(InventoryQuery.fromReservation(reservation));
+        inventoryMessageSender.sendMessage(RoomInventoryEvent.rollback(roomStockInfoList));
         reservationCommandOutputPort.updateReservationStatus(reservation.getReservationId(), updatedStatus);
     }
 }

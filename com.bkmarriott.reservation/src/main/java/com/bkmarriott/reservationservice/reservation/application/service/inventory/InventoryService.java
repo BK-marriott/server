@@ -2,8 +2,8 @@ package com.bkmarriott.reservationservice.reservation.application.service.invent
 
 import com.bkmarriott.reservationservice.reservation.application.exception.InventoryUpdateFailureException;
 import com.bkmarriott.reservationservice.reservation.application.exception.ResourceNotFoundException;
+import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryMessageSender;
 import com.bkmarriott.reservationservice.reservation.application.outputport.inventory.InventoryCommandOutputPort;
-import com.bkmarriott.reservationservice.reservation.application.outputport.inventory.InventoryQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.reservation.ReservationQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.cache.InventoryCacheOutputPort;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
@@ -22,9 +22,8 @@ import org.springframework.stereotype.Service;
 public class InventoryService {
 
   private final InventoryCommandOutputPort inventoryCommandOutputPort;
-  private final InventoryQueryOutputPort inventoryQueryOutputPort;
   private final InventoryCacheOutputPort inventoryCacheOutputPort;
-
+  private final InventoryMessageSender inventoryMessageSender;
   private final ReservationQueryOutputPort reservationQueryOutputPort;
 
 
@@ -59,5 +58,6 @@ public class InventoryService {
 
     List<RoomInventoryEvent.RoomStockInfo> roomStockInfoList = inventoryCacheOutputPort.decreaseRoomCount(query);
 
+    inventoryMessageSender.sendMessage(RoomInventoryEvent.prepare(roomStockInfoList));
   }
 }
