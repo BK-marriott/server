@@ -29,15 +29,4 @@ public class BatchConfig {
                 .next(inventorySyncStepConfig.validateAndSyncInventoryStep())
                 .build();
     }
-
-
-
-
-
-
-
-
-
-
-
 }
