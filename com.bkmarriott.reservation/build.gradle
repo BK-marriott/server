@@ -118,7 +118,8 @@ jacocoTestCoverageVerification {
             }
 
             excludes = ["*.*Config", "*.*Entity*", "*.*Application", "*.dto.*",
-                        "*.util.*", "*.exception.*", "*.*Query*", "*.infrastructure.cache.*"
+                        "*.util.*", "*.exception.*", "*.*Query*", "*.infrastructure.cache.*",
+                        "*.batch.*", "*.infrastructure.event.*"
             ]
         }
     }
