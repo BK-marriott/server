@@ -1,4 +1,6 @@
-# 🏨 BK-Marriott
+<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/b0263ee6-dd0c-4a31-a2c9-e2b6ba31cd2c/Untitled-1.png?table=block&id=cfcdc450-3ee3-42ec-9ef2-4b2764b29a99&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737475200000&signature=GrEOHMV-GnaVKEi0p00lsdSkg2z_vOWwv1Svzu0fFjA&downloadName=Untitled-1.png" />
+
+
 >호텔 체인점 예약 시스템</br>
 > 개발 기간 : 2024.12.23 ~ 2025.01.27
 
