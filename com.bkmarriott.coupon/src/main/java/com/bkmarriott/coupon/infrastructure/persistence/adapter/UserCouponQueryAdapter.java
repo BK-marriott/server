@@ -9,6 +9,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -26,11 +28,10 @@ public class UserCouponQueryAdapter {
                 .orElseThrow(UserCouponNotFoundException::new);
     }
 
-    public List<UserCoupon> getUserCouponListByUserId(Long userId) {
+    public Page<UserCoupon> getUserCouponListByUserId(Long userId, Pageable pageable) {
         log.info("[UserCouponQueryAdapter] [getById] getCouponsByUserId ::: {}", userId);
 
-        return userCouponRepository.findUserCouponListByUserId(userId).stream()
-                .map(UserCouponEntity::toDomain)
-                .toList();
+        return userCouponRepository.findUserCouponListByUserId(userId, pageable)
+                .map(UserCouponEntity::toDomain);
     }
 }

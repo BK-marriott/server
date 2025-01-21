@@ -1,12 +1,12 @@
 package com.bkmarriott.coupon.presentation.rest.dto.response;
 
 import com.bkmarriott.coupon.domain.UserCoupon;
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public record GetUserCouponListResponse(
-        List<UserCoupon> userCouponList
+        Page<UserCoupon> userCouponList
 ) {
-    public static GetUserCouponListResponse from(List<UserCoupon> userCoupons) {
+    public static GetUserCouponListResponse from(Page<UserCoupon> userCoupons) {
         return new GetUserCouponListResponse(userCoupons);
     }
 }

@@ -8,6 +8,9 @@ import com.bkmarriott.coupon.presentation.rest.dto.response.GetUserCouponListRes
 import com.bkmarriott.coupon.presentation.rest.util.LoginActor;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +31,9 @@ public class CouponQueryController {
     }
 
     @GetMapping("/user-coupons")
-    public ResponseEntity<GetUserCouponListResponse> getUserCouponList(@LoginActor Actor actor) {
-        List<UserCoupon> userCoupons = userCouponQueryAdapter.getUserCouponListByUserId(actor.userId());
+    public ResponseEntity<GetUserCouponListResponse> getUserCouponList(@LoginActor Actor actor,
+                                                                       @PageableDefault Pageable pageable) {
+        Page<UserCoupon> userCoupons = userCouponQueryAdapter.getUserCouponListByUserId(actor.userId(), pageable);
         return ResponseEntity.ok(GetUserCouponListResponse.from(userCoupons));
     }
 }
