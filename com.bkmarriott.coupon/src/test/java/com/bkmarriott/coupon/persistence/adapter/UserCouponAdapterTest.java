@@ -12,16 +12,16 @@ import com.bkmarriott.coupon.infrastructure.persistence.repository.CouponPolicyR
 import com.bkmarriott.coupon.infrastructure.persistence.repository.CouponRepository;
 import com.bkmarriott.coupon.persistence.config.RepositoryTest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
 @DisplayName("[Infrastructure] [Integration] UserCoupon Adapter Test")
 @RepositoryTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserCouponAdapterTest {
 
     @Autowired
@@ -41,6 +41,8 @@ class UserCouponAdapterTest {
         couponRepository.deleteAll();
         couponPolicyRepository.deleteAll();
     }
+  
+    private final Long testUserId = 1234L;
 
     @Test
     @DisplayName("[성공] 유효한 쿠폰 조회 테스트 - 쿠폰 아이디로 기간이 유효하고 미사용인 쿠폰이 있으면 반환")
@@ -67,7 +69,7 @@ class UserCouponAdapterTest {
         return new UserCoupon(
                 userCouponId,
                 generateTestCoupon(),
-                1234L,
+                testUserId,
                 LocalDateTime.of(2025, 1, 4, 0, 0, 0),
                 null,
                 LocalDateTime.of(2025, 1, 31, 0, 0, 0)
@@ -79,7 +81,7 @@ class UserCouponAdapterTest {
         return new UserCoupon(
                 null,
                 generateTestCoupon(),
-                1234L,
+                testUserId,
                 LocalDateTime.of(2025, 1, 4, 0, 0, 0),
                 LocalDateTime.of(2025, 1, 8, 0, 0, 0),
                 LocalDateTime.of(2025, 1, 31, 0, 0, 0)
@@ -147,6 +149,42 @@ class UserCouponAdapterTest {
         Assertions.assertThrows(
                 UserCouponNotFoundException.class,
                 () -> userCouponCommandAdapter.cancelUserCouponUsage(testUserCoupon)
+        );
+    }
+
+    @Test
+    @DisplayName("[성공] 쿠폰 조회 테스트 (Command) - 쿠폰 아이디가 일치하는 쿠폰이 있으면 반환")
+    void getUserCouponById_successTest_CommandAdapter() {
+        // Given
+        UserCoupon userCoupon = generateTestUserCoupon(null);
+
+        // When
+        UserCoupon generatedCoupon = userCouponCommandAdapter.generateUserCoupon(userCoupon);
+        UserCoupon actual = userCouponCommandAdapter.findById(generatedCoupon.getId());
+
+        // Then
+        Assertions.assertAll(
+                () -> Assertions.assertNotNull(actual),
+                () -> Assertions.assertEquals(generatedCoupon.getId(), actual.getId())
+        );
+    }
+
+    @Test
+    @DisplayName("[성공] 유저별 쿠폰 목록 조회 테스트  - 유저 아이디가 일치하는 쿠폰 목록 반환")
+    void getUserCouponById_successTest_QueryAdapter() {
+        // Given
+        List<UserCoupon> generatedList = new ArrayList<>();
+        UserCoupon generatedCoupon = userCouponCommandAdapter.generateUserCoupon(generateTestUserCoupon(null));
+        generatedList.add(generatedCoupon);
+
+        // When
+        List<UserCoupon> actual = userCouponQueryAdapter.getUserCouponListByUserId(testUserId);
+
+        // Then
+        Assertions.assertAll(
+                () -> Assertions.assertNotNull(actual),
+                () -> Assertions.assertEquals(1, actual.size()),
+                () -> Assertions.assertEquals(generatedCoupon.getId(), actual.get(0).getId())
         );
     }
 }
