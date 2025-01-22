@@ -1,4 +1,4 @@
-# BK Marriott <img width="100" alt="image" src="https://private-user-images.githubusercontent.com/48899055/405441859-9c9a13a4-3c97-4122-8ac4-94d105951a2a.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc1MTA1ODAsIm5iZiI6MTczNzUxMDI4MCwicGF0aCI6Ii80ODg5OTA1NS80MDU0NDE4NTktOWM5YTEzYTQtM2M5Ny00MTIyLThhYzQtOTRkMTA1OTUxYTJhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTIyVDAxNDQ0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTRjOWZkZTdlMzk0Y2E5ZjFmYTYxMWI5ZGFhOWQ3MTYyMGJiY2QxZmY1MTg2MTlkYmUwODMxMGM5MWMyNmNlMWUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.QbzcHDI54RMPMacd7C-Yi3EnN6DWIR-mMhRRzSoPtq4" align=left >
+# BK Marriott <img width="100" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/cb38aced-1d69-47b4-ad5a-981bb7333db9/KakaoTalk_Photo_2024-12-27-03-21-53.png?table=block&id=5147dbaa-24b5-45f6-b659-a562bbf61f84&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=Du6PTDI5XdTPB7Suv9LmyCZTJMhKwJ1usBCLr3U0k6I&downloadName=KakaoTalk_Photo_2024-12-27-03-21-53.png" align=left >
 
 
 대용량 트래픽 처리와 동시성을 보장하는 대규모 호텔 체인의 예약 시스템
@@ -58,13 +58,13 @@
 <br/><br/>
 
 ## 🌐 아키텍처 설계도
-<img width="1518" alt="image" src="https://private-user-images.githubusercontent.com/48899055/405441906-9cc4165a-d8a9-4d52-b52e-8d596926b745.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc1MTA1ODAsIm5iZiI6MTczNzUxMDI4MCwicGF0aCI6Ii80ODg5OTA1NS80MDU0NDE5MDYtOWNjNDE2NWEtZDhhOS00ZDUyLWI1MmUtOGQ1OTY5MjZiNzQ1LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTIyVDAxNDQ0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWJmOTYxMzdmZTBkZGQzNWM2YTRhNjJkZDExZjQ0MjQ5MjNmMWY2YTU0MzZjNzIyYTRmY2JjYzYyZTU0OGM3NDMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FM2M1ZoWYkjoXePzOd9k9JbWDeuBEG4aWP2C43-7pdY" />
+<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/fbc7d80c-2103-4145-8bd2-15b569a24e51/image.png?table=block&id=cfd664a5-0b3a-4a93-afd7-790768979452&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=JF0MvS_zsGG4ElZJgGbMlsJeMiNJwnUVB5djOSyfpN8&downloadName=image.png" />
 
 <br/>
 
 ## 🗂 ERD
 
-<img width="1518" alt="image" src="https://private-user-images.githubusercontent.com/48899055/405442176-20ecb364-83c7-4242-b999-3bbeb35f7069.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc1MTA1ODAsIm5iZiI6MTczNzUxMDI4MCwicGF0aCI6Ii80ODg5OTA1NS80MDU0NDIxNzYtMjBlY2IzNjQtODNjNy00MjQyLWI5OTktM2JiZWIzNWY3MDY5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTIyVDAxNDQ0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM0M2IzMTg0M2ZlM2YwMjQ1ODc1MjlmYjIyNzc3NWFiNDcxYzBjMDQyNWEyMzc1YjQ2YjQ4NTU5MDc4ODk2YTUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.hcfSJR777jwtji2riVjAzPz1ZZA6MDsA1126yLQPHpw" />
+<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/f9a12a24-f9c6-4f38-8d85-52c431cde272/marriot.png?table=block&id=97b597ff-9061-4975-a20e-770c81182d40&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=JTQzURqxAApcB6tFOWOafcpKjyxxobCUbTV7AmZIyQI&downloadName=marriot.png" />
 
 <br/>
 
