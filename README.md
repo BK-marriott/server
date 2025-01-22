@@ -22,20 +22,24 @@
 **Development**
 
 <p>
-<img src="https://img.shields.io/badge/JDK 17-E38836?style=flat&logo=openJdk&logoColor=white">
-<img src="https://img.shields.io/badge/SpringBoot 3.4-6DB33F?style=flat-square&logo=springboot&logoColor=white"/> 
+<img src="https://img.shields.io/badge/JDK 17-E38836?style=flat-square&logo=openJdk&logoColor=white">
+<img src="https://img.shields.io/badge/SpringBoot 3.4-6DB33F?style=flat-square&logo=springboot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=gradle&logoColor=white"/>
 <br />
 <img src="https://img.shields.io/badge/JPA-6DB33F?style=flat-square&logo=hibernate&logoColor=white"/> 
 <img src="https://img.shields.io/badge/SpringDataJPA-6DB33F?style=flat-square&logo=spring&logoColor=white"/>
 <img src="https://img.shields.io/badge/QueryDSL-6DB33F?style=flat-square&logo=spring&logoColor=white"/>
 <img src="https://img.shields.io/badge/Spring Batch-6DB33F?style=flat-square&logo=spring&logoColor=white"/>
+<img src="https://img.shields.io/badge/OpenFeign-6DB33F?style=flat-square&logo=spring&logoColor=white"/>
+
 </p>
 
 **Database**
 
 <p>
-<img src="https://img.shields.io/badge/MySQL 8-08668E?style=flat&logo=mysql&logoColor=white">
-<img src="https://img.shields.io/badge/Redis-FF0000?style=flat&logo=redis&logoColor=white">
+<img src="https://img.shields.io/badge/MySQL 8-08668E?style=flat-square&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/Redis-FF0000?style=flat-square&logo=redis&logoColor=white">
+<img src="https://img.shields.io/badge/H2 Database-004088?style=flat-square&logo=h2&logoColor=white"/>
 </p>
 
 **Server**
@@ -43,16 +47,37 @@
 <p>
 <img src="https://img.shields.io/badge/Eureka-6DB33F?style=flat-square&logo=spring&logoColor=white"/>
 <img src="https://img.shields.io/badge/SpringGateway-6DB33F?style=flat-square&logo=spring&logoColor=white"/>
-<img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat-square&logo=springSecurity&logoColor=white"/>
-<img src="https://img.shields.io/badge/Resilience4j-000000?style=flat-square&logo=&logoColor=white"/>
-<br />
 <img src="https://img.shields.io/badge/Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white"/>
-<img src="https://img.shields.io/badge/Google Gemini api-8E75B2?style=flat-square&logo=googleGemini&logoColor=white"/>
+<img src="https://img.shields.io/badge/Resilience4j-000000?style=flat-square&logo=&logoColor=white"/>
 <img src="https://img.shields.io/badge/Slack api-4A154B?style=flat-square&logo=slack&logoColor=white"/>
-<br />
+</p>
+
+**Test**
+
+<p>
+<img src="https://img.shields.io/badge/JUnit 5-25A162?style=flat-square&logo=junit5&logoColor=white"/>
+<img src="https://img.shields.io/badge/JaCoCo-B7178C?style=flat-square&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Mockito-00B4AB?style=flat-square&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/SonarQube-4E9BCD?style=flat-square&logo=sonarqube&logoColor=white"/>
+<img src="https://img.shields.io/badge/JMeter-D22128?style=flat-square&logo=apachejmeter&logoColor=white"/>
+<p />
+
+**Monitoring**
+
+<p>
+<img src="https://img.shields.io/badge/Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white"/>
+<img src="https://img.shields.io/badge/Grafana-F46800?style=flat-square&logo=grafana&logoColor=white"/>
 <img src="https://img.shields.io/badge/Zipkin-FE5F50?style=flat-square&logo=&logoColor=white"/>
+</p>
+
+**CI/CD**
+
+<p>
+<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"/>
 <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
-<img src="https://img.shields.io/badge/DockerCompose-2496ED?style=flat-square&logo=docker&logoColor=white"/>
+<img src="https://img.shields.io/badge/Docker Compose-2496ED?style=flat-square&logo=docker&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat-square&logo=amazonrds&logoColor=white"/>
 </p>
 
 <br/><br/>
