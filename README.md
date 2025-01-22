@@ -1,15 +1,23 @@
-<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/b0263ee6-dd0c-4a31-a2c9-e2b6ba31cd2c/Untitled-1.png?table=block&id=cfcdc450-3ee3-42ec-9ef2-4b2764b29a99&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737475200000&signature=GrEOHMV-GnaVKEi0p00lsdSkg2z_vOWwv1Svzu0fFjA&downloadName=Untitled-1.png" />
+# BK Marriott <img width="100" alt="image" src="https://private-user-images.githubusercontent.com/48899055/405441859-9c9a13a4-3c97-4122-8ac4-94d105951a2a.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc1MTA1ODAsIm5iZiI6MTczNzUxMDI4MCwicGF0aCI6Ii80ODg5OTA1NS80MDU0NDE4NTktOWM5YTEzYTQtM2M5Ny00MTIyLThhYzQtOTRkMTA1OTUxYTJhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTIyVDAxNDQ0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTRjOWZkZTdlMzk0Y2E5ZjFmYTYxMWI5ZGFhOWQ3MTYyMGJiY2QxZmY1MTg2MTlkYmUwODMxMGM5MWMyNmNlMWUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.QbzcHDI54RMPMacd7C-Yi3EnN6DWIR-mMhRRzSoPtq4" align=left >
 
 
->호텔 체인점 예약 시스템</br>
+대용량 트래픽 처리와 동시성을 보장하는 대규모 호텔 체인의 예약 시스템
+
+<br/>
+
+## 📍 프로젝트 목표
+
 > 개발 기간 : 2024.12.23 ~ 2025.01.27
 
-저희 프로젝트는 5,000개 호텔과 100만 개 객실을 보유한 대규모 호텔 체인의 예약 시스템 구축을 목표로 합니다. <br>
-고객은 웹사이트에서 프로모션을 통해 쿠폰을 발급받고, 객실 조회, 예약, 결제 과정을 원활하게 처리할 수 있는 서비스를 제공합니다.
+- 저희 프로젝트는 5,000개 호텔과 100만 개 객실을 보유한 대규모 호텔 체인의 예약 시스템 구축을 목표로 합니다.
+- 특정 기간 프로모션을 통해 선착순 쿠폰을 발급해주고, 객실 조회 및 예약, 결제 과정을 원활하게 처리할 수 있는 서비스를 제공합니다.
+- 서버의 안정성을 위해 트래픽 처리량을 초기 진단하여 장애를 예방합니다.
+- 선착순 쿠폰 발급 및 호텔 예약 시 동시성 문제에 대해 고민하고 해결합니다.
 
-<br/><br/>
 
-## ✨ 사용기술 및 개발환경
+<br/>
+
+## ⚒️ 사용기술 및 개발환경
 
 **Development**
 
@@ -48,62 +56,88 @@
 
 <br/><br/>
 
-## ✨ 서버 아키텍처
-<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/241981bf-8790-4013-ada1-31a38d6efec9/image.png?table=block&id=ffa0f6f4-181f-4627-b620-5190fa4a664d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737468000000&signature=T17BrrcvURHh7vYhb9CIujcF3OxSdMuPxgU6tQQH9OU&downloadName=image.png" />
-
-
-<br/><br/>
-
-## ✨️ 서비스 구성 및 실행방법
-
-### 실행 방법 
-> [WIKI보기]()
-
-### 🛡 Gateway Service
-
-> * 토큰을 통한 사용자 요청 인증/인가 처리
-> * 로드밸런싱, 로깅
-
-
-### 🛡 Auth Service
-
-> * 로그인 및 회원가입
-> * JWT 토큰 발급
-> * 유저 데이터 관리
-
-
-### 📦 Promotion Service
-
-> *
+## 🌐 아키텍처 설계도
+<img width="1518" alt="image" src="https://private-user-images.githubusercontent.com/48899055/405441906-9cc4165a-d8a9-4d52-b52e-8d596926b745.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc1MTA1ODAsIm5iZiI6MTczNzUxMDI4MCwicGF0aCI6Ii80ODg5OTA1NS80MDU0NDE5MDYtOWNjNDE2NWEtZDhhOS00ZDUyLWI1MmUtOGQ1OTY5MjZiNzQ1LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTIyVDAxNDQ0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWJmOTYxMzdmZTBkZGQzNWM2YTRhNjJkZDExZjQ0MjQ5MjNmMWY2YTU0MzZjNzIyYTRmY2JjYzYyZTU0OGM3NDMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FM2M1ZoWYkjoXePzOd9k9JbWDeuBEG4aWP2C43-7pdY" />
 
 <br/>
 
+## 🗂 ERD
 
-<br/><br/>
+<img width="1518" alt="image" src="https://private-user-images.githubusercontent.com/48899055/405442176-20ecb364-83c7-4242-b999-3bbeb35f7069.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mzc1MTA1ODAsIm5iZiI6MTczNzUxMDI4MCwicGF0aCI6Ii80ODg5OTA1NS80MDU0NDIxNzYtMjBlY2IzNjQtODNjNy00MjQyLWI5OTktM2JiZWIzNWY3MDY5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAxMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMTIyVDAxNDQ0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM0M2IzMTg0M2ZlM2YwMjQ1ODc1MjlmYjIyNzc3NWFiNDcxYzBjMDQyNWEyMzc1YjQ2YjQ4NTU5MDc4ODk2YTUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.hcfSJR777jwtji2riVjAzPz1ZZA6MDsA1126yLQPHpw" />
 
-## ✨️ 의사 결정
+<br/>
 
-#### 🚀 
+## 🧩 서비스 구성
 
-<br/><br/>
+### 📢 Promotion Service
 
-## ✨️ 트러블 슈팅
+> * 프로모션 등록
+> * 선착순 쿠폰 발급
 
-#### 🚀 
+### 🎟 Coupon Service
+
+> * 쿠폰 발급 및 조회
+> * 쿠폰 유효성 검증
+
+### 🏨 Hotel Service
+
+> * 호텔 정보 등록 및 관리
+> * 호텔 검색
+
+### 📅 Reservation Service
+
+> * 예약 가능한 객실 정보 조회
+> * 객실 예약 및 취소 처리
+> * 예약 상태 확인 및 변경
+
+### 💰 Charge Service
+
+> * 3개월치 호텔 객실 별 요금 데이터 관리
+> * 호텔 객실 별 요금 조회
+
+### 💳 Payment Service
+
+> * 결제 및 환불 처리
+> * 결제 이력 조회
+
+### 🛡 Gateway Service
+
+> * JWT를 이용한 인증/인가 처리
+> * 로드밸런싱 및 서비스 라우팅
+
+### 🔑 Auth Service
+
+> * 로그인 및 회원가입
+> * JWT 토큰 발급
+> * 사용자 관리
+
+<br/>
+
+## ⚙️ 기술적 의사 결정
+
+[🚀 DDD와 애플리케이션 아키텍처 설계](https://www.notion.so/teamsparta/DDD-164ff65aa200432ab8f8d011876a500a?pvs=4) <br />
+[🚀 Jacoco와 SonarQube 적용](https://www.notion.so/teamsparta/JaCoCo-SonarQube-13d0075e532d42c3a49d6d775ecf9d6d?pvs=4) <br />
+[🚀 선착순 쿠폰 발급 동시성 처리 방법](https://www.notion.so/teamsparta/db834834d52f4e699eaef609b8fd0867?pvs=4) <br />
+[🚀 호텔 예약 동시성 처리 방법](https://www.notion.so/teamsparta/f6ee0b4da13d442481930c4428cd4958?pvs=4) <br />
+[🚀 Redis 원자성 보장하기](https://www.notion.so/teamsparta/Redis-300cd87664d84bc5b5df8d6d069a6cb7?pvs=4) <br />
+[🚀 Spring Batch를 활용한 Redis & DB 동기화](https://www.notion.so/teamsparta/Spring-Batch-Redis-DB-5bb6f7f16218461280e506774dd2a12d?pvs=4) <br />
+
+<br/>
+
+## 🔍 트러블 슈팅
+
+[🚀 선착순 쿠폰 발급 서비스 설계기](https://www.notion.so/teamsparta/84351178213c4b718dd564c4685684f4?pvs=4) <br />
+[🚀 도메인 로직과 이벤트 발행의 원자성 보장하기](https://www.notion.so/teamsparta/1ba43d212aaf4f6e86733795327a7cc8?pvs=4) <br />
+[🚀 조건부 속성 문제 해결기 (DDD + Factory Method)](https://www.notion.so/teamsparta/DDD-Factory-Method-0b993e2e7aa6469aadc1de9ca3f1bdc8?pvs=4) <br />
+[🚀 요금 스케줄링 bulk insert (매일 1만 개 데이터)](https://www.notion.so/teamsparta/bulk-insert-1-dbc1fac63d304940b1d6fa32f50fd897?pvs=4) <br />
+[🚀 더티체킹으로 인한 업데이트 동시성 문제 해결기](https://yearweekend.notion.site/18178453701480f5b1d8d9f60d980872?pvs=4) <br />
 
 <br/><br/>
 
 
 ### 🧑🏻‍💻 개발 인원 및 역할
 
-|팀원명|역할|
-|:---:|:---:|
-|<img src="https://avatars.githubusercontent.com/u/96504592?v=4" width="150px;" alt=""/><br /><sub><b>[정현수](https://github.com/hyunsb)</b></sub></a><br />| 여기에 내용을 작성해주세요 |
-|<img src="https://avatars.githubusercontent.com/u/158719845?v=4" width="150px;" alt=""/><br /><sub><b>[연이현](https://github.com/DISNOTACAT)</b></sub></a><br />| 여기에 내용을 작성해주세요 |
-|<img src="https://avatars.githubusercontent.com/u/110008586?v=4" width="150px;" alt=""/><br /><sub><b>[권현준](https://github.com/Kwonhyunjun)</b></sub></a><br />| 여기에 내용을 작성해주세요 |
-|<img src="https://avatars.githubusercontent.com/u/48899055?v=4" width="150px;" alt=""/><br /><sub><b>[이주희](https://github.com/zoohee)</b></sub></a><br />| 여기에 내용을 작성해주세요 |
-|<img src="https://avatars.githubusercontent.com/u/68426501?v=4" width="150px;" alt=""/><br /><sub><b>[연제민](https://github.com/yjm07)</b></sub></a><br />| 여기에 내용을 작성해주세요 |
-
-<br/><br/>
-
-## ✨ ERD
+|<img src="https://avatars.githubusercontent.com/u/96504592?v=4" width="100px;" alt=""/><br /><sub><b>[정현수](https://github.com/hyunsb)</b></sub></a><br />|<img src="https://avatars.githubusercontent.com/u/158719845?v=4" width="100px;" alt=""/><br /><sub><b>[연이현](https://github.com/DISNOTACAT)</b></sub></a><br />|<img src="https://avatars.githubusercontent.com/u/110008586?v=4" width="100px;" alt=""/><br /><sub><b>[권현준](https://github.com/Kwonhyunjun)</b></sub></a><br />|<img src="https://avatars.githubusercontent.com/u/48899055?v=4" width="100px;" alt=""/><br /><sub><b>[이주희](https://github.com/zoohee)</b></sub></a><br />|<img src="https://avatars.githubusercontent.com/u/68426501?v=4" width="100px;" alt=""/><br /><sub><b>[연제민](https://github.com/yjm07)</b></sub></a><br />|
+|:---:|:---:|:---:|:---:|:---:|
+| ▶ 아키텍처 설계 <br> ▶ 프로모션, 쿠폰 서비스 개발 <br> ▶ 게이트웨이, 유저 서비스 개발 <br> ▶ JaCoCo 및 SonarQube 도입 | ▶ 예약 서비스 개발 <br> ▶ 결제 서비스 개발| ▶ 예약 서비스 개발 <br> ▶ 호텔 서비스 개발 |  ▶ 쿠폰 서비스 개발 <br> ▶ 인프라 구축 및 CI/CD | ▶ 예약 서비스 개발 <br> ▶ 객실 요금 서비스 개발 |
+<br/>
