@@ -3,10 +3,7 @@ package com.bkmarriott.reservationservice.reservation.infrastructure.persistence
 import com.bkmarriott.reservationservice.reservation.domain.event.RoomInventoryEvent;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.util.RedisKeyParser;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name  = "m_inventory_history")
 @Entity
+@Builder
 public class InventoryHistoryEntity {
 
     @Id

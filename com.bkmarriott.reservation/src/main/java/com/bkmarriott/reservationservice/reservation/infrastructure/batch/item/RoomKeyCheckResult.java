@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RoomKeyCheckResult {
     private String redisRoomKey;
-    private long calculatedStock;
-    private long redisStock;
-    private boolean matched;
+    private long roomStock;
 }
