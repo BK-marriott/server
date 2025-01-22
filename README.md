@@ -87,12 +87,6 @@
 
 <br/>
 
-## 🗂 ERD
-
-<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/f9a12a24-f9c6-4f38-8d85-52c431cde272/marriot.png?table=block&id=97b597ff-9061-4975-a20e-770c81182d40&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=JTQzURqxAApcB6tFOWOafcpKjyxxobCUbTV7AmZIyQI&downloadName=marriot.png" />
-
-<br/>
-
 ## 🧩 서비스 구성
 
 ### 📢 Promotion Service
@@ -160,6 +154,11 @@
 
 <br/><br/>
 
+## 🗂 ERD
+
+<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/f9a12a24-f9c6-4f38-8d85-52c431cde272/marriot.png?table=block&id=97b597ff-9061-4975-a20e-770c81182d40&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=JTQzURqxAApcB6tFOWOafcpKjyxxobCUbTV7AmZIyQI&downloadName=marriot.png" />
+
+<br/>
 
 ### 🧑🏻‍💻 개발 인원 및 역할
 
