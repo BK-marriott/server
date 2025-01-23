@@ -6,7 +6,7 @@ import com.bkmarriott.reservationservice.reservation.infrastructure.batch.item.E
 import com.bkmarriott.reservationservice.reservation.infrastructure.batch.item.RoomKeyCheckResult;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.entity.*;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryHistoryRepository;
-import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.InventoryRepository;
+import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.repository.inventory.InventoryRepository;
 import com.bkmarriott.reservationservice.reservation.infrastructure.persistence.util.RedisKeyParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

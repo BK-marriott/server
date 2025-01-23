@@ -2,19 +2,16 @@ package com.bkmarriott.reservationservice.reservation.application.service;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 
 import com.bkmarriott.reservationservice.reservation.application.exception.InventoryUpdateFailureException;
 import com.bkmarriott.reservationservice.reservation.application.exception.ResourceNotFoundException;
-import com.bkmarriott.reservationservice.reservation.application.dto.InventoryQueryResponseDto;
+
 import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryMessageSender;
-import com.bkmarriott.reservationservice.reservation.application.outputport.InventoryQueryOutputPort;
+
 import com.bkmarriott.reservationservice.reservation.application.outputport.cache.InventoryCacheOutputPort;
-import com.bkmarriott.reservationservice.reservation.application.outputport.feign.ChargeOutputPort;
+
 import com.bkmarriott.reservationservice.reservation.domain.event.RoomInventoryEvent;
 import com.bkmarriott.reservationservice.reservation.application.outputport.inventory.InventoryCommandOutputPort;
-import com.bkmarriott.reservationservice.reservation.application.outputport.inventory.InventoryQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.outputport.reservation.ReservationQueryOutputPort;
 import com.bkmarriott.reservationservice.reservation.application.service.inventory.InventoryService;
 import com.bkmarriott.reservationservice.reservation.domain.Inventory;
@@ -23,8 +20,7 @@ import com.bkmarriott.reservationservice.reservation.domain.vo.InventoryQuery;
 import com.bkmarriott.reservationservice.reservation.domain.vo.ReservationStatus;
 import com.bkmarriott.reservationservice.reservation.domain.vo.RoomType;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -44,7 +40,6 @@ class InventoryServiceTest {
   @InjectMocks private InventoryService inventoryService;
   @Mock private InventoryCommandOutputPort inventoryCommandOutputPort;
   @Mock private ReservationQueryOutputPort reservationQueryOutputPort;
-  @Mock private InventoryQueryOutputPort inventoryQueryOutputPort;
   @Mock private InventoryCacheOutputPort inventoryCacheOutputPort;
   @Mock private InventoryMessageSender inventoryMessageSender;
 
