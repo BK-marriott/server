@@ -1,4 +1,4 @@
-# BK Marriott <img width="100" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/cb38aced-1d69-47b4-ad5a-981bb7333db9/KakaoTalk_Photo_2024-12-27-03-21-53.png?table=block&id=5147dbaa-24b5-45f6-b659-a562bbf61f84&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=Du6PTDI5XdTPB7Suv9LmyCZTJMhKwJ1usBCLr3U0k6I&downloadName=KakaoTalk_Photo_2024-12-27-03-21-53.png" align=left >
+# BK Marriott <img width="100" alt="image" src="https://github.com/user-attachments/assets/9c9a13a4-3c97-4122-8ac4-94d105951a2a" align=left >
 
 
 대용량 트래픽 처리와 동시성을 보장하는 대규모 호텔 체인의 예약 시스템
@@ -83,7 +83,7 @@
 <br/><br/>
 
 ## 🌐 아키텍처 설계도
-<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/fbc7d80c-2103-4145-8bd2-15b569a24e51/image.png?table=block&id=cfd664a5-0b3a-4a93-afd7-790768979452&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=JF0MvS_zsGG4ElZJgGbMlsJeMiNJwnUVB5djOSyfpN8&downloadName=image.png" />
+<img width="1518" alt="image" src="https://github.com/user-attachments/assets/9cc4165a-d8a9-4d52-b52e-8d596926b745" />
 
 <br/>
 
@@ -156,7 +156,7 @@
 
 ## 🗂 ERD
 
-<img width="1518" alt="image" src="https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/f9a12a24-f9c6-4f38-8d85-52c431cde272/marriot.png?table=block&id=97b597ff-9061-4975-a20e-770c81182d40&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1737540000000&signature=JTQzURqxAApcB6tFOWOafcpKjyxxobCUbTV7AmZIyQI&downloadName=marriot.png" />
+<img width="1518" alt="image" src="https://github.com/user-attachments/assets/20ecb364-83c7-4242-b999-3bbeb35f7069" />
 
 <br/>
 
