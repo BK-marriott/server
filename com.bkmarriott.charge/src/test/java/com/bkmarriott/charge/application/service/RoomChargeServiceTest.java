@@ -227,7 +227,7 @@ class RoomChargeServiceTest {
 
         // Then
         ArgumentCaptor<List<RoomChargeForCreate>> captor = ArgumentCaptor.forClass(List.class);
-        Mockito.verify(roomChargeOutputPort).bulkCreate(captor.capture());
+        Mockito.verify(roomChargeOutputPort).bulkCreateBatch(ArgumentMatchers.anyInt(), captor.capture());
 
         List<RoomChargeForCreate> capturedCharges = captor.getValue();
         LocalDate expectedDate = LocalDate.now().plusMonths(3);
