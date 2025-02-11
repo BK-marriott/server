@@ -76,6 +76,6 @@ public class RoomChargeService {
                 .map(hotelType -> RoomChargeForCreate.of(hotelType.getHotelId(), hotelType.getRoomType(), date, roomChargeMap.get(hotelType.getRoomType())))
                 .toList();
 
-        roomChargeOutputPort.bulkCreate(roomChargeForCreateList);
+        roomChargeOutputPort.bulkCreateBatch(1000, roomChargeForCreateList);
     }
 }

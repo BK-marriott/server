@@ -11,7 +11,9 @@ import com.bkmarriott.charge.infrastructure.persistence.entity.RoomChargeEntityI
 import com.bkmarriott.charge.infrastructure.persistence.repository.DefaultRoomChargeRepository;
 import com.bkmarriott.charge.infrastructure.persistence.repository.RoomChargeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,7 @@ public class RoomChargeAdapter implements RoomChargeOutputPort {
 
     private final RoomChargeRepository roomChargeRepository;
     private final DefaultRoomChargeRepository defaultRoomChargeRepository;
+    private final JdbcTemplate jdbcTemplate;
 
     public Optional<RoomCharge> findById(RoomChargeId roomChargeId) {
         return roomChargeRepository.findByIdAndIsDeletedFalse(RoomChargeEntityId.fromDomain(roomChargeId))
@@ -45,6 +48,23 @@ public class RoomChargeAdapter implements RoomChargeOutputPort {
                 .map(RoomChargeEntity::from)
                 .toList();
         roomChargeRepository.saveAll(roomChargeEntities);
+    }
+
+    @Transactional
+    public void bulkCreateBatch(int batchSize, List<RoomChargeForCreate> roomChargeForCreateList) {
+        batchUpdate(batchSize, roomChargeForCreateList);
+    }
+
+    private void batchUpdate(int batchSize, List<RoomChargeForCreate> roomChargeForCreateList) {
+        String sql = "INSERT INTO m_room_charge (hotel_id, room_type, date, charge) VALUES (?, ?, ?, ?)";
+
+        jdbcTemplate.batchUpdate(sql, roomChargeForCreateList, batchSize, (ps, argument) -> {
+            RoomChargeEntity entity = RoomChargeEntity.from(argument);
+            ps.setLong(1, entity.getId().getHotelId());
+            ps.setString(2, entity.getId().getRoomType().toString());
+            ps.setString(3, entity.getId().getDate().toString());
+            ps.setInt(4, entity.getCharge());
+        });
     }
 
     public RoomCharge updateCharge(RoomCharge roomCharge, Integer charge) {

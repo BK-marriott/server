@@ -48,6 +48,15 @@ class RoomChargeAdapterTest {
     }
 
     @Test
+    @DisplayName("[객실 요금 batch 벌크 등록 성공 테스트] 객실 요금을 batch 벌크 생성한다.")
+    void bulkCreateBatch_successTest() {
+        // Given
+        List<RoomChargeForCreate> roomChargeForCreateList = genRoomChargeForCreateList();
+        // When & Then
+        Assertions.assertDoesNotThrow(() -> roomChargeAdapter.bulkCreateBatch(5, roomChargeForCreateList));
+    }
+
+    @Test
     @DisplayName("[객실 요금 조회 성공 테스트] 객실 요금 ID로 객실 요금을 조회한 뒤 Optional 객체에 담아 반환한다.")
     void findById_successTest() {
         // Given
@@ -67,7 +76,7 @@ class RoomChargeAdapterTest {
     void findAll_successTest() {
         // Given
         List<RoomChargeForCreate> roomChargeForCreateList = genRoomChargeForCreateList();
-        roomChargeAdapter.bulkCreate(roomChargeForCreateList);
+        roomChargeAdapter.bulkCreateBatch(5, roomChargeForCreateList);
         // When
         List<RoomCharge> roomChargeList = roomChargeAdapter.findAll(
                 roomChargeForCreateList.stream().map(RoomChargeForCreate::id).toList()

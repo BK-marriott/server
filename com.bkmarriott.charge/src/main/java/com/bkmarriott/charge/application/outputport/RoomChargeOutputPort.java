@@ -18,6 +18,8 @@ public interface RoomChargeOutputPort {
 
     void bulkCreate(List<RoomChargeForCreate> roomChargeForCreateList);
 
+    void bulkCreateBatch(int batchSize, List<RoomChargeForCreate> roomChargeForCreateList);
+
     RoomCharge updateCharge(RoomCharge roomCharge, Integer charge);
 
     List<DefaultRoomCharge> findAllDefault();

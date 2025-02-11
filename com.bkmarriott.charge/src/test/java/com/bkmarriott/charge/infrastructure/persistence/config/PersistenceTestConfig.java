@@ -8,6 +8,7 @@ import com.bkmarriott.charge.infrastructure.persistence.repository.RoomChargeRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class PersistenceTestConfig {
@@ -15,9 +16,10 @@ public class PersistenceTestConfig {
     @Bean
     public RoomChargeAdapter roomChargeAdapter(
             @Autowired RoomChargeRepository roomChargeRepository,
-            @Autowired DefaultRoomChargeRepository defaultRoomChargeRepository
+            @Autowired DefaultRoomChargeRepository defaultRoomChargeRepository,
+            @Autowired JdbcTemplate jdbcTemplate
     ) {
-        return new RoomChargeAdapter(roomChargeRepository, defaultRoomChargeRepository);
+        return new RoomChargeAdapter(roomChargeRepository, defaultRoomChargeRepository, jdbcTemplate);
     }
 
     @Bean
